@@ -27,7 +27,7 @@ namespace Idavolta
         }
         #endregion
 
-        public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, char Opcao = '1')
+        public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, string DataCarona, char Opcao = '1')
         {
 
             GravarLog("Criando ou alterando o arquivo Excel");
@@ -51,9 +51,16 @@ namespace Idavolta
                     ExcelWorksheet worksheet = package.Workbook.Worksheets["Planilha1"];
                     int linhaInicial = worksheet.Dimension.End.Row + 1;
 
-                    worksheet.Cells[linhaInicial, 1].Value = DateTime.Now.ToString("dd/MM/yyyy");
-                    worksheet.Cells[linhaInicial, 2].Value = valorGui;
-                    worksheet.Cells[linhaInicial, 3].Value = valorKamile;
+                    worksheet.Cells[linhaInicial, 1].Value = DataCarona;
+                    if (TipodaCaronaGui == TipoCaronaGui.SemCaronaGui)
+                        worksheet.Cells[linhaInicial, 2].Value = "";
+                    else
+                        worksheet.Cells[linhaInicial, 2].Value = valorGui;
+
+                    if (TipodaCaronaKamile == TipoCaronaKamile.SemCaronaKamile)
+                        worksheet.Cells[linhaInicial, 3].Value = "";
+                    else
+                        worksheet.Cells[linhaInicial, 3].Value = valorKamile;
 
 
                     package.Save();
@@ -74,7 +81,7 @@ namespace Idavolta
                     worksheet.Cells["D1"].Value = "";
                     worksheet.Cells["E1"].Value = "Valor da Passagem:";
 
-                    worksheet.Cells[2, 1].Value = DateTime.Now.ToString("dd/MM/yyyy");
+                    worksheet.Cells[2, 1].Value = DataCarona;
                     worksheet.Cells[2, 2].Value = valorGui;
                     worksheet.Cells[2, 3].Value = valorKamile;
                     worksheet.Cells[1, 6].Value = ValorPassagemPadrao;
