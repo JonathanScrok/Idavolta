@@ -34,6 +34,7 @@
             txtboxDatadeHoje = new TextBox();
             btnAlterar = new Button();
             groupBoxGuilherme = new GroupBox();
+            radioSemCaronaGui = new RadioButton();
             lblGuilherme = new Label();
             radiobtnIdaGui = new RadioButton();
             radiobtnVoltaGui = new RadioButton();
@@ -44,6 +45,11 @@
             radiobtnVoltaKamile = new RadioButton();
             radiobtnIdaVoltaKamile = new RadioButton();
             btnSalvar = new Button();
+            lblValorTotalGui = new LinkLabel();
+            lblValorTotalKamile = new LinkLabel();
+            lblTxtValorTotalGui = new Label();
+            lblTxtValorTotalKamile = new Label();
+            radioSemCaronaKamile = new RadioButton();
             groupBoxGuilherme.SuspendLayout();
             groupBoxKamile.SuspendLayout();
             SuspendLayout();
@@ -94,15 +100,28 @@
             // 
             // groupBoxGuilherme
             // 
+            groupBoxGuilherme.Controls.Add(radioSemCaronaGui);
             groupBoxGuilherme.Controls.Add(lblGuilherme);
             groupBoxGuilherme.Controls.Add(radiobtnIdaGui);
             groupBoxGuilherme.Controls.Add(radiobtnVoltaGui);
             groupBoxGuilherme.Controls.Add(radiobtnIdaVoltaGui);
-            groupBoxGuilherme.Location = new Point(138, 162);
+            groupBoxGuilherme.Location = new Point(140, 133);
             groupBoxGuilherme.Name = "groupBoxGuilherme";
-            groupBoxGuilherme.Size = new Size(200, 150);
+            groupBoxGuilherme.Size = new Size(200, 175);
             groupBoxGuilherme.TabIndex = 14;
             groupBoxGuilherme.TabStop = false;
+            // 
+            // radioSemCaronaGui
+            // 
+            radioSemCaronaGui.AutoSize = true;
+            radioSemCaronaGui.Font = new Font("Segoe UI", 14F);
+            radioSemCaronaGui.Location = new Point(6, 138);
+            radioSemCaronaGui.Name = "radioSemCaronaGui";
+            radioSemCaronaGui.Size = new Size(132, 29);
+            radioSemCaronaGui.TabIndex = 10;
+            radioSemCaronaGui.TabStop = true;
+            radioSemCaronaGui.Text = "Sem Carona";
+            radioSemCaronaGui.UseVisualStyleBackColor = true;
             // 
             // lblGuilherme
             // 
@@ -157,9 +176,9 @@
             groupBoxKamile.Controls.Add(radiobtnIdaKamile);
             groupBoxKamile.Controls.Add(radiobtnVoltaKamile);
             groupBoxKamile.Controls.Add(radiobtnIdaVoltaKamile);
-            groupBoxKamile.Location = new Point(463, 162);
+            groupBoxKamile.Location = new Point(465, 133);
             groupBoxKamile.Name = "groupBoxKamile";
-            groupBoxKamile.Size = new Size(200, 150);
+            groupBoxKamile.Size = new Size(200, 175);
             groupBoxKamile.TabIndex = 15;
             groupBoxKamile.TabStop = false;
             // 
@@ -213,19 +232,84 @@
             // btnSalvar
             // 
             btnSalvar.Font = new Font("Segoe UI", 15F);
-            btnSalvar.Location = new Point(310, 342);
+            btnSalvar.Location = new Point(324, 314);
             btnSalvar.Name = "btnSalvar";
-            btnSalvar.Size = new Size(167, 44);
+            btnSalvar.Size = new Size(159, 44);
             btnSalvar.TabIndex = 16;
             btnSalvar.Text = "Salvar";
             btnSalvar.UseVisualStyleBackColor = true;
             btnSalvar.Click += btnSalvar_Click;
+            // 
+            // lblValorTotalGui
+            // 
+            lblValorTotalGui.AutoSize = true;
+            lblValorTotalGui.Font = new Font("Segoe UI", 17F);
+            lblValorTotalGui.LinkColor = Color.Navy;
+            lblValorTotalGui.Location = new Point(203, 404);
+            lblValorTotalGui.MinimumSize = new Size(100, 50);
+            lblValorTotalGui.Name = "lblValorTotalGui";
+            lblValorTotalGui.Size = new Size(100, 50);
+            lblValorTotalGui.TabIndex = 17;
+            lblValorTotalGui.TabStop = true;
+            lblValorTotalGui.Text = "ValorGui";
+            lblValorTotalGui.LinkClicked += lblValorTotalGui_LinkClicked;
+            // 
+            // lblValorTotalKamile
+            // 
+            lblValorTotalKamile.AutoSize = true;
+            lblValorTotalKamile.Font = new Font("Segoe UI", 17F);
+            lblValorTotalKamile.LinkColor = Color.Navy;
+            lblValorTotalKamile.Location = new Point(716, 404);
+            lblValorTotalKamile.MinimumSize = new Size(100, 50);
+            lblValorTotalKamile.Name = "lblValorTotalKamile";
+            lblValorTotalKamile.Size = new Size(100, 50);
+            lblValorTotalKamile.TabIndex = 18;
+            lblValorTotalKamile.TabStop = true;
+            lblValorTotalKamile.Text = "ValorKamile";
+            lblValorTotalKamile.LinkClicked += lblValorTotalKamile_LinkClicked;
+            // 
+            // lblTxtValorTotalGui
+            // 
+            lblTxtValorTotalGui.AutoSize = true;
+            lblTxtValorTotalGui.Font = new Font("Segoe UI", 15F);
+            lblTxtValorTotalGui.Location = new Point(5, 406);
+            lblTxtValorTotalGui.Name = "lblTxtValorTotalGui";
+            lblTxtValorTotalGui.Size = new Size(203, 28);
+            lblTxtValorTotalGui.TabIndex = 19;
+            lblTxtValorTotalGui.Text = "Valor Total Guilherme:";
+            // 
+            // lblTxtValorTotalKamile
+            // 
+            lblTxtValorTotalKamile.AutoSize = true;
+            lblTxtValorTotalKamile.Font = new Font("Segoe UI", 15F);
+            lblTxtValorTotalKamile.Location = new Point(434, 406);
+            lblTxtValorTotalKamile.Name = "lblTxtValorTotalKamile";
+            lblTxtValorTotalKamile.Size = new Size(287, 28);
+            lblTxtValorTotalKamile.TabIndex = 20;
+            lblTxtValorTotalKamile.Text = "Valor Total a pagar para Kamile:";
+            // 
+            // radioSemCaronaKamile
+            // 
+            radioSemCaronaKamile.AutoSize = true;
+            radioSemCaronaKamile.Font = new Font("Segoe UI", 14F);
+            radioSemCaronaKamile.Location = new Point(471, 271);
+            radioSemCaronaKamile.Name = "radioSemCaronaKamile";
+            radioSemCaronaKamile.Size = new Size(132, 29);
+            radioSemCaronaKamile.TabIndex = 11;
+            radioSemCaronaKamile.TabStop = true;
+            radioSemCaronaKamile.Text = "Sem Carona";
+            radioSemCaronaKamile.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(radioSemCaronaKamile);
+            Controls.Add(lblTxtValorTotalKamile);
+            Controls.Add(lblTxtValorTotalGui);
+            Controls.Add(lblValorTotalKamile);
+            Controls.Add(lblValorTotalGui);
             Controls.Add(btnSalvar);
             Controls.Add(groupBoxKamile);
             Controls.Add(groupBoxGuilherme);
@@ -265,5 +349,11 @@
         private GroupBox groupBoxGuilherme;
         private GroupBox groupBoxKamile;
         private Button btnSalvar;
+        private LinkLabel lblValorTotalGui;
+        private LinkLabel lblValorTotalKamile;
+        private Label lblTxtValorTotalGui;
+        private Label lblTxtValorTotalKamile;
+        private RadioButton radioSemCaronaGui;
+        private RadioButton radioSemCaronaKamile;
     }
 }

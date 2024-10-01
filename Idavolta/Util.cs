@@ -20,9 +20,13 @@ namespace Idavolta
         #region CONSTRUTOR
         public Util(string caminhoArquivoLog, string diretorioArquivoExcel, string valorPassagemPadrao, string nomeArquivoExcel)
         {
+            int mes = DateTime.Now.Month;
+            int ano = DateTime.Now.Year;
+            string mesFormatado = mes < 10 ? "0" + mes : mes.ToString();
+
             CaminhoArquivoLog = caminhoArquivoLog;
             DiretorioArquivoExcel = diretorioArquivoExcel;
-            NomeArquivoExcel = nomeArquivoExcel;
+            NomeArquivoExcel = mesFormatado + "_" + ano + "_" + nomeArquivoExcel;
             ValorPassagemPadrao = Convert.ToDouble(valorPassagemPadrao);
         }
         #endregion
@@ -121,29 +125,50 @@ namespace Idavolta
             }
         }
 
-        public static double LerOuCriarExcel()
+        public static (double valoresGuilherme, double valoresKamile, double valorPassagem) LerOuCriarExcel()
         {
             // Configurar o contexto de licença
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
+            double sumGuilherme = 0;
+            double sumKamile = 0;
+            double valorPassagem = 0;
+
+            int mes = DateTime.Now.Month;
+            string mesFormatado = mes < 10 ? "0" + mes : mes.ToString();
+
             if (File.Exists(DiretorioArquivoExcel + NomeArquivoExcel))
             {
-                // Se o arquivo existir, lê o valor da célula E2
+                // Se o arquivo existir
                 using (ExcelPackage package = new ExcelPackage(new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel)))
                 {
                     ExcelWorksheet worksheet = package.Workbook.Worksheets["Planilha1"];
-                    var valorPassagem = worksheet.Cells["F1"].Value;
 
-                    if (valorPassagem != null && double.TryParse(valorPassagem.ToString(), out double valor))
+                    // Calcular os valores para Guilherme e Kamile
+                    int row = 2; // Inicia na segunda linha pois a primeira é o cabeçalho
+                    while (worksheet.Cells[row, 2].Value != null || worksheet.Cells[row, 3].Value != null)
                     {
-                        Console.WriteLine($"Valor da Passagem lida: {valor}");
-                        return valor;
+                        if (double.TryParse(worksheet.Cells[row, 2].Value?.ToString(), out double valorGuilherme))
+                        {
+                            sumGuilherme += valorGuilherme;
+                        }
+
+                        if (double.TryParse(worksheet.Cells[row, 3].Value?.ToString(), out double valorKamile))
+                        {
+                            sumKamile += valorKamile;
+                        }
+
+                        row++;
                     }
-                    else
+
+                    // Ler o valor da passagem
+                    var valorPassagemCell = worksheet.Cells["F1"].Value;
+                    if (valorPassagemCell != null && double.TryParse(valorPassagemCell.ToString(), out double valor))
                     {
-                        Console.WriteLine("Valor da Passagem não encontrado ou inválido.");
-                        return 0.0;
+                        valorPassagem = valor;
                     }
+
+                    return (sumGuilherme, sumKamile, valorPassagem);
                 }
             }
             else
@@ -165,10 +190,11 @@ namespace Idavolta
                     package.SaveAs(fi);
 
                     Console.WriteLine("Novo arquivo Excel criado com valor padrão na célula E2.");
-                    return ValorPassagemPadrao;
+                    return (0.0, 0.0, ValorPassagemPadrao);
                 }
             }
         }
+
 
 
         public static void GravarLog(string mensagemLog)

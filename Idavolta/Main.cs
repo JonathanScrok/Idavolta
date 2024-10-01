@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Idavolta
 {
     public partial class Main : Form
@@ -11,7 +13,11 @@ namespace Idavolta
         {
             txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
-            txtboxValorPassagem.Text = Util.LerOuCriarExcel().ToString("F2");
+            var valores = Util.LerOuCriarExcel();
+
+            txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
+            lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
+            lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
         }
 
         private void btnAlterar_Click(object sender, EventArgs e)
@@ -70,6 +76,18 @@ namespace Idavolta
             }
 
             Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, txtboxDatadeHoje.Text);
+        }
+
+        private void lblValorTotalGui_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string caminho = Util.DiretorioArquivoExcel;
+            Process.Start("explorer.exe", caminho);
+        }
+
+        private void lblValorTotalKamile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string caminho = Util.DiretorioArquivoExcel;
+            Process.Start("explorer.exe", caminho);
         }
     }
 }
