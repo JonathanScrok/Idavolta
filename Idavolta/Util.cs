@@ -110,7 +110,7 @@ namespace Idavolta
         #endregion
 
         #region ALTERA O ARQUIVO EXCEL
-        public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, string DataCarona, out double valorKamile, out double valorGui, char Opcao = '1')
+        public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, string DataCarona, double valorTotalAnteriorGui, double valorTotalAnteriorKamile, out double valorKamile, out double valorGui, char Opcao = '1')
         {
             GravarLog("Criando ou alterando o arquivo Excel");
 
@@ -163,6 +163,11 @@ namespace Idavolta
 
                     worksheet.Cells[linhaInicial, 4].Value = resumoCaronas;
 
+                    if (valorTotalAnteriorGui > 0 || valorGui > 0)
+                        worksheet.Cells[1, 7].Value = "VALOR TOTAL GUI: " + (valorTotalAnteriorGui + valorGui).ToString("F2");
+
+                    if (valorTotalAnteriorKamile > 0 || valorKamile > 0)
+                        worksheet.Cells[1, 8].Value = "VALOR TOTAL KAMILE: " + (valorTotalAnteriorKamile + valorKamile).ToString("F2");
 
                     package.Save();
                     GravarLog("Finalizado! Dados adicionados ao arquivo Excel existente!");
@@ -186,7 +191,14 @@ namespace Idavolta
                     worksheet.Cells[2, 3].Value = valorKamile;
                     worksheet.Cells[2, 4].Value = resumoCaronas;
                     worksheet.Cells[1, 6].Value = ValorPassagemPadrao;
+
+                    if (valorTotalAnteriorGui > 0 || valorGui > 0)
+                        worksheet.Cells[1, 7].Value = "VALOR TOTAL GUI: " + (valorTotalAnteriorGui + valorGui).ToString("F2");
+
+                    if (valorTotalAnteriorKamile > 0 || valorKamile > 0)
+                        worksheet.Cells[1, 8].Value = "VALOR TOTAL KAMILE: " + (valorTotalAnteriorKamile + valorKamile).ToString("F2");
                     
+
 
                     var fi = new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel);
                     package.SaveAs(fi);

@@ -53,7 +53,7 @@ namespace Idavolta
             }
         }
 
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             TipoCaronaGui guilhermeSelection = TipoCaronaGui.SemCaronaGui;
             TipoCaronaKamile kamileSelection = TipoCaronaKamile.SemCaronaKamile;
@@ -88,13 +88,18 @@ namespace Idavolta
 
             double valorGui = 0;
             double valorKamile = 0;
-            Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, txtboxDatadeHoje.Text, out valorKamile, out valorGui);
+            Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, txtboxDatadeHoje.Text, Convert.ToDouble(lblValorTotalGui.Text), Convert.ToDouble(lblValorTotalKamile.Text), out valorKamile, out valorGui);
 
             double valorTotalGui = Convert.ToDouble(lblValorTotalGui.Text) + valorGui;
             double valorTotalKamile = Convert.ToDouble(lblValorTotalKamile.Text) + valorKamile;
             lblValorTotalGui.Text = valorTotalGui.ToString("F2");
             lblValorTotalKamile.Text = valorTotalKamile.ToString("F2");
 
+            lblAviso.Text = "Sucesso!";
+            lblAviso.ForeColor = Color.Green;
+            lblAviso.Visible = true;
+            await Task.Delay(2000); // Espera por 3 segundos
+            lblAviso.Visible = false;
         }
 
         private void lblValorTotalGui_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

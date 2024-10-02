@@ -52,6 +52,7 @@
             lblTxtValorTotalKamile = new Label();
             btnAnterior = new Button();
             btnProximo = new Button();
+            lblAviso = new Label();
             groupBoxGuilherme.SuspendLayout();
             groupBoxKamile.SuspendLayout();
             SuspendLayout();
@@ -323,11 +324,24 @@
             btnProximo.UseVisualStyleBackColor = true;
             btnProximo.Click += btnProximo_Click;
             // 
+            // lblAviso
+            // 
+            lblAviso.AutoSize = true;
+            lblAviso.Font = new Font("Arial Rounded MT Bold", 18F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblAviso.ForeColor = SystemColors.ControlText;
+            lblAviso.Location = new Point(358, 88);
+            lblAviso.Name = "lblAviso";
+            lblAviso.Size = new Size(76, 28);
+            lblAviso.TabIndex = 23;
+            lblAviso.Text = "Aviso";
+            lblAviso.Visible = false;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblAviso);
             Controls.Add(btnProximo);
             Controls.Add(btnAnterior);
             Controls.Add(lblTxtValorTotalKamile);
@@ -381,5 +395,6 @@
         private RadioButton radioSemCaronaKamile;
         private Button btnAnterior;
         private Button btnProximo;
+        private Label lblAviso;
     }
 }
