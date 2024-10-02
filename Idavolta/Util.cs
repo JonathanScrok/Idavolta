@@ -15,10 +15,12 @@ namespace Idavolta
         public static string DiretorioArquivoExcel { get; set; }
         public static string NomeArquivoExcel { get; set; }
         public static double ValorPassagemPadrao { get; set; }
+        public static bool SomemteGui { get; set; }
+        public static bool SomenteKamile { get; set; }
         #endregion
 
         #region CONSTRUTOR
-        public Util(string caminhoArquivoLog, string diretorioArquivoExcel, string valorPassagemPadrao, string nomeArquivoExcel)
+        public Util(string caminhoArquivoLog, string diretorioArquivoExcel, string valorPassagemPadrao, string nomeArquivoExcel, bool somemteGui, bool somenteKamile)
         {
             int mes = DateTime.Now.Month;
             int ano = DateTime.Now.Year;
@@ -28,6 +30,8 @@ namespace Idavolta
             DiretorioArquivoExcel = diretorioArquivoExcel;
             NomeArquivoExcel = mesFormatado + "_" + ano + "_" + nomeArquivoExcel;
             ValorPassagemPadrao = Convert.ToDouble(valorPassagemPadrao);
+            SomemteGui = somemteGui;
+            SomenteKamile = somenteKamile;
         }
         #endregion
 

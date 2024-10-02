@@ -15,6 +15,16 @@ namespace Idavolta
 
             var valores = Util.LerOuCriarExcel();
 
+            if (Util.SomemteGui)
+            {
+                groupBoxGuilherme.Location = new Point(307, 133);
+                groupBoxKamile.Visible = false;
+            } else if (Util.SomenteKamile)
+            {
+                groupBoxKamile.Location = new Point(307, 133);
+                groupBoxGuilherme.Visible = false;
+            }
+
             txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
             lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
             lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");

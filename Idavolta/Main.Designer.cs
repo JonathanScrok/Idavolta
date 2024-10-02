@@ -34,13 +34,14 @@
             txtboxDatadeHoje = new TextBox();
             btnAlterar = new Button();
             groupBoxGuilherme = new GroupBox();
-            radioSemCaronaGui = new RadioButton();
             lblGuilherme = new Label();
+            radioSemCaronaGui = new RadioButton();
             radiobtnIdaGui = new RadioButton();
             radiobtnVoltaGui = new RadioButton();
             radiobtnIdaVoltaGui = new RadioButton();
             groupBoxKamile = new GroupBox();
             lblKamile = new Label();
+            radioSemCaronaKamile = new RadioButton();
             radiobtnIdaKamile = new RadioButton();
             radiobtnVoltaKamile = new RadioButton();
             radiobtnIdaVoltaKamile = new RadioButton();
@@ -49,7 +50,6 @@
             lblValorTotalKamile = new LinkLabel();
             lblTxtValorTotalGui = new Label();
             lblTxtValorTotalKamile = new Label();
-            radioSemCaronaKamile = new RadioButton();
             groupBoxGuilherme.SuspendLayout();
             groupBoxKamile.SuspendLayout();
             SuspendLayout();
@@ -100,8 +100,8 @@
             // 
             // groupBoxGuilherme
             // 
-            groupBoxGuilherme.Controls.Add(radioSemCaronaGui);
             groupBoxGuilherme.Controls.Add(lblGuilherme);
+            groupBoxGuilherme.Controls.Add(radioSemCaronaGui);
             groupBoxGuilherme.Controls.Add(radiobtnIdaGui);
             groupBoxGuilherme.Controls.Add(radiobtnVoltaGui);
             groupBoxGuilherme.Controls.Add(radiobtnIdaVoltaGui);
@@ -110,6 +110,17 @@
             groupBoxGuilherme.Size = new Size(200, 175);
             groupBoxGuilherme.TabIndex = 14;
             groupBoxGuilherme.TabStop = false;
+            // 
+            // lblGuilherme
+            // 
+            lblGuilherme.AutoSize = true;
+            lblGuilherme.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblGuilherme.Location = new Point(45, 0);
+            lblGuilherme.MinimumSize = new Size(50, 30);
+            lblGuilherme.Name = "lblGuilherme";
+            lblGuilherme.Size = new Size(110, 30);
+            lblGuilherme.TabIndex = 9;
+            lblGuilherme.Text = "Guilherme";
             // 
             // radioSemCaronaGui
             // 
@@ -122,17 +133,6 @@
             radioSemCaronaGui.TabStop = true;
             radioSemCaronaGui.Text = "Sem Carona";
             radioSemCaronaGui.UseVisualStyleBackColor = true;
-            // 
-            // lblGuilherme
-            // 
-            lblGuilherme.AutoSize = true;
-            lblGuilherme.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblGuilherme.Location = new Point(45, 0);
-            lblGuilherme.MinimumSize = new Size(50, 30);
-            lblGuilherme.Name = "lblGuilherme";
-            lblGuilherme.Size = new Size(110, 30);
-            lblGuilherme.TabIndex = 9;
-            lblGuilherme.Text = "Guilherme";
             // 
             // radiobtnIdaGui
             // 
@@ -173,6 +173,7 @@
             // groupBoxKamile
             // 
             groupBoxKamile.Controls.Add(lblKamile);
+            groupBoxKamile.Controls.Add(radioSemCaronaKamile);
             groupBoxKamile.Controls.Add(radiobtnIdaKamile);
             groupBoxKamile.Controls.Add(radiobtnVoltaKamile);
             groupBoxKamile.Controls.Add(radiobtnIdaVoltaKamile);
@@ -192,6 +193,18 @@
             lblKamile.Size = new Size(77, 30);
             lblKamile.TabIndex = 10;
             lblKamile.Text = "Kamile";
+            // 
+            // radioSemCaronaKamile
+            // 
+            radioSemCaronaKamile.AutoSize = true;
+            radioSemCaronaKamile.Font = new Font("Segoe UI", 14F);
+            radioSemCaronaKamile.Location = new Point(6, 138);
+            radioSemCaronaKamile.Name = "radioSemCaronaKamile";
+            radioSemCaronaKamile.Size = new Size(132, 29);
+            radioSemCaronaKamile.TabIndex = 11;
+            radioSemCaronaKamile.TabStop = true;
+            radioSemCaronaKamile.Text = "Sem Carona";
+            radioSemCaronaKamile.UseVisualStyleBackColor = true;
             // 
             // radiobtnIdaKamile
             // 
@@ -262,7 +275,7 @@
             lblValorTotalKamile.Location = new Point(716, 404);
             lblValorTotalKamile.MinimumSize = new Size(100, 50);
             lblValorTotalKamile.Name = "lblValorTotalKamile";
-            lblValorTotalKamile.Size = new Size(100, 50);
+            lblValorTotalKamile.Size = new Size(134, 50);
             lblValorTotalKamile.TabIndex = 18;
             lblValorTotalKamile.TabStop = true;
             lblValorTotalKamile.Text = "ValorKamile";
@@ -288,24 +301,11 @@
             lblTxtValorTotalKamile.TabIndex = 20;
             lblTxtValorTotalKamile.Text = "Valor Total a pagar para Kamile:";
             // 
-            // radioSemCaronaKamile
-            // 
-            radioSemCaronaKamile.AutoSize = true;
-            radioSemCaronaKamile.Font = new Font("Segoe UI", 14F);
-            radioSemCaronaKamile.Location = new Point(471, 271);
-            radioSemCaronaKamile.Name = "radioSemCaronaKamile";
-            radioSemCaronaKamile.Size = new Size(132, 29);
-            radioSemCaronaKamile.TabIndex = 11;
-            radioSemCaronaKamile.TabStop = true;
-            radioSemCaronaKamile.Text = "Sem Carona";
-            radioSemCaronaKamile.UseVisualStyleBackColor = true;
-            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(radioSemCaronaKamile);
             Controls.Add(lblTxtValorTotalKamile);
             Controls.Add(lblTxtValorTotalGui);
             Controls.Add(lblValorTotalKamile);

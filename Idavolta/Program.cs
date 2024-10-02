@@ -23,11 +23,13 @@ namespace Idavolta
             string DiretorioLOG = configuration.GetSection("AppSettings")["DiretorioLOG"];
             string ValorPassagemPadrao = configuration.GetSection("AppSettings")["ValorPassagemPadrao"];
             string NomeArquivoExcel = configuration.GetSection("AppSettings")["NomeArquivoExcel"];
+            bool SomemteGui = configuration.GetSection("AppSettings")["SomemteGui"] == "S" ? true : false;
+            bool SomenteKamile = configuration.GetSection("AppSettings")["SomenteKamile"] == "S" ? true : false;
             #endregion
 
             #region Injeção de Dependencia
 
-            Util ferramenta = new Util(DiretorioLOG, DiretorioArquivoExcel, ValorPassagemPadrao, NomeArquivoExcel);
+            Util ferramenta = new Util(DiretorioLOG, DiretorioArquivoExcel, ValorPassagemPadrao, NomeArquivoExcel, SomemteGui, SomenteKamile);
 
             #endregion
 
