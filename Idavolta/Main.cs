@@ -86,7 +86,15 @@ namespace Idavolta
                 kamileSelection = TipoCaronaKamile.IdaVoltaKamile;
             }
 
-            Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, txtboxDatadeHoje.Text);
+            double valorGui = 0;
+            double valorKamile = 0;
+            Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, txtboxDatadeHoje.Text, out valorKamile, out valorGui);
+
+            double valorTotalGui = Convert.ToDouble(lblValorTotalGui.Text) + valorGui;
+            double valorTotalKamile = Convert.ToDouble(lblValorTotalKamile.Text) + valorKamile;
+            lblValorTotalGui.Text = valorTotalGui.ToString("F2");
+            lblValorTotalKamile.Text = valorTotalKamile.ToString("F2");
+
         }
 
         private void lblValorTotalGui_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

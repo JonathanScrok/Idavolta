@@ -110,17 +110,21 @@ namespace Idavolta
         #endregion
 
         #region ALTERA O ARQUIVO EXCEL
-        public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, string DataCarona, char Opcao = '1')
+        public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, string DataCarona, out double valorKamile, out double valorGui, char Opcao = '1')
         {
             GravarLog("Criando ou alterando o arquivo Excel");
 
-            double valorGui = valorPassagem;
+            valorGui = valorPassagem;
             if (TipodaCaronaGui == TipoCaronaGui.IdaVoltaGui)
                 valorGui += valorPassagem;
+            else if (TipodaCaronaGui == TipoCaronaGui.SemCaronaGui)
+                valorGui = 0;
 
-            double valorKamile = valorPassagem;
+            valorKamile = valorPassagem;
             if (TipodaCaronaKamile == TipoCaronaKamile.IdaVoltaKamile)
                 valorKamile += valorPassagem;
+            else if (TipodaCaronaKamile == TipoCaronaKamile.SemCaronaKamile)
+                valorKamile = 0;
 
             string resumoCaronas = string.Empty;
             if (TipodaCaronaGui != TipoCaronaGui.SemCaronaGui)
