@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,7 +38,6 @@ namespace Idavolta
 
         public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, string DataCarona, char Opcao = '1')
         {
-
             GravarLog("Criando ou alterando o arquivo Excel");
 
             double valorGui = valorPassagem;
@@ -47,6 +47,19 @@ namespace Idavolta
             double valorKamile = valorPassagem;
             if (TipodaCaronaKamile == TipoCaronaKamile.IdaVoltaKamile)
                 valorKamile += valorPassagem;
+
+            string resumoCaronas = string.Empty;
+            if (TipodaCaronaGui != TipoCaronaGui.SemCaronaGui)
+            {
+                resumoCaronas = "G:" + GetEnumDescription(TipodaCaronaGui);
+            }
+            if (TipodaCaronaKamile != TipoCaronaKamile.SemCaronaKamile)
+            {
+                if (string.IsNullOrEmpty(resumoCaronas))
+                    resumoCaronas = "K:" + GetEnumDescription(TipodaCaronaKamile);
+                else
+                    resumoCaronas = resumoCaronas + " K:" + GetEnumDescription(TipodaCaronaKamile);
+            }
 
             // Configurar o contexto de licença
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
@@ -70,6 +83,8 @@ namespace Idavolta
                     else
                         worksheet.Cells[linhaInicial, 3].Value = valorKamile;
 
+                    worksheet.Cells[linhaInicial, 4].Value = resumoCaronas;
+
 
                     package.Save();
                     Console.WriteLine("Arquivo Excel existente atualizado.");
@@ -86,12 +101,13 @@ namespace Idavolta
                     worksheet.Cells["A1"].Value = "Data";
                     worksheet.Cells["B1"].Value = "Guilherme";
                     worksheet.Cells["C1"].Value = "Kamile";
-                    worksheet.Cells["D1"].Value = "";
+                    worksheet.Cells["D1"].Value = "Resumo das Caronas";
                     worksheet.Cells["E1"].Value = "Valor da Passagem:";
 
                     worksheet.Cells[2, 1].Value = DataCarona;
                     worksheet.Cells[2, 2].Value = valorGui;
                     worksheet.Cells[2, 3].Value = valorKamile;
+                    worksheet.Cells[2, 4].Value = resumoCaronas;
                     worksheet.Cells[1, 6].Value = ValorPassagemPadrao;
                     
 
@@ -102,7 +118,6 @@ namespace Idavolta
                     GravarLog("Finalizado! Dados já no novo arquivo Excel!");
                 }
             }
-
         }
 
         public static void AlterarValorPassagemExcel(double valorPassagem)
@@ -185,7 +200,7 @@ namespace Idavolta
                     worksheet.Cells["A1"].Value = "Data";
                     worksheet.Cells["B1"].Value = "Guilherme";
                     worksheet.Cells["C1"].Value = "Kamile";
-                    worksheet.Cells["D1"].Value = "";
+                    worksheet.Cells["D1"].Value = "Resumo das Caronas";
                     worksheet.Cells["E1"].Value = "Valor da Passagem:";
 
                     worksheet.Cells["F1"].Value = ValorPassagemPadrao;
@@ -198,8 +213,6 @@ namespace Idavolta
                 }
             }
         }
-
-
 
         public static void GravarLog(string mensagemLog)
         {
@@ -236,6 +249,13 @@ namespace Idavolta
         public static DateTime DiaSeguinte(DateTime data)
         {
             return data.AddDays(1);
+        }
+
+        public static string GetEnumDescription(Enum value)
+        {
+            FieldInfo field = value.GetType().GetField(value.ToString());
+            DescriptionAttribute attribute = (DescriptionAttribute)field.GetCustomAttribute(typeof(DescriptionAttribute));
+            return attribute == null ? value.ToString() : attribute.Description;
         }
     }
 }
