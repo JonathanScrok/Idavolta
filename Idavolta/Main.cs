@@ -19,7 +19,8 @@ namespace Idavolta
             {
                 groupBoxGuilherme.Location = new Point(307, 133);
                 groupBoxKamile.Visible = false;
-            } else if (Util.SomenteKamile)
+            }
+            else if (Util.SomenteKamile)
             {
                 groupBoxKamile.Location = new Point(307, 133);
                 groupBoxGuilherme.Visible = false;
@@ -98,6 +99,16 @@ namespace Idavolta
         {
             string caminho = Util.DiretorioArquivoExcel;
             Process.Start("explorer.exe", caminho);
+        }
+
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            txtboxDatadeHoje.Text = Util.DiaAnterior(Convert.ToDateTime(txtboxDatadeHoje.Text)).ToString("dd/MM/yyyy");
+        }
+
+        private void btnProximo_Click(object sender, EventArgs e)
+        {
+            txtboxDatadeHoje.Text = Util.DiaSeguinte(Convert.ToDateTime(txtboxDatadeHoje.Text)).ToString("dd/MM/yyyy");
         }
     }
 }

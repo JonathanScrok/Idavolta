@@ -50,6 +50,8 @@
             lblValorTotalKamile = new LinkLabel();
             lblTxtValorTotalGui = new Label();
             lblTxtValorTotalKamile = new Label();
+            btnAnterior = new Button();
+            btnProximo = new Button();
             groupBoxGuilherme.SuspendLayout();
             groupBoxKamile.SuspendLayout();
             SuspendLayout();
@@ -301,11 +303,33 @@
             lblTxtValorTotalKamile.TabIndex = 20;
             lblTxtValorTotalKamile.Text = "Valor Total a pagar para Kamile:";
             // 
+            // btnAnterior
+            // 
+            btnAnterior.Location = new Point(635, 76);
+            btnAnterior.Name = "btnAnterior";
+            btnAnterior.Size = new Size(75, 23);
+            btnAnterior.TabIndex = 21;
+            btnAnterior.Text = "Anterior";
+            btnAnterior.UseVisualStyleBackColor = true;
+            btnAnterior.Click += btnAnterior_Click;
+            // 
+            // btnProximo
+            // 
+            btnProximo.Location = new Point(716, 76);
+            btnProximo.Name = "btnProximo";
+            btnProximo.Size = new Size(75, 23);
+            btnProximo.TabIndex = 22;
+            btnProximo.Text = "Próximo";
+            btnProximo.UseVisualStyleBackColor = true;
+            btnProximo.Click += btnProximo_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnProximo);
+            Controls.Add(btnAnterior);
             Controls.Add(lblTxtValorTotalKamile);
             Controls.Add(lblTxtValorTotalGui);
             Controls.Add(lblValorTotalKamile);
@@ -355,5 +379,7 @@
         private Label lblTxtValorTotalKamile;
         private RadioButton radioSemCaronaGui;
         private RadioButton radioSemCaronaKamile;
+        private Button btnAnterior;
+        private Button btnProximo;
     }
 }

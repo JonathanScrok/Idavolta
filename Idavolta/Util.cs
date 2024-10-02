@@ -227,5 +227,15 @@ namespace Idavolta
                 Console.WriteLine($"Erro ao gravar o log: {ex.Message}");
             }
         }
+
+        public static DateTime DiaAnterior(DateTime data)
+        {
+            return data.AddDays(-1);
+        }
+
+        public static DateTime DiaSeguinte(DateTime data)
+        {
+            return data.AddDays(1);
+        }
     }
 }
