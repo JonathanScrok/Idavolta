@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             lblValorPassagem = new Label();
             txtboxValorPassagem = new TextBox();
             lblDataHoje = new Label();
@@ -356,6 +357,7 @@
             Controls.Add(lblDataHoje);
             Controls.Add(txtboxValorPassagem);
             Controls.Add(lblValorPassagem);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Main";
             Text = "Ida e Volta";
             Load += Form1_Load;
