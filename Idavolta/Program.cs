@@ -26,8 +26,8 @@ namespace Idavolta
                 string DiretorioLOG = configuration.GetSection("AppSettings")["DiretorioLOG"];
                 string ValorPassagemPadrao = configuration.GetSection("AppSettings")["ValorPassagemPadrao"];
                 string NomeArquivoExcel = configuration.GetSection("AppSettings")["NomeArquivoExcel"];
-                bool SomemteGui = configuration.GetSection("AppSettings")["SomemteGui"] == "S" ? true : false;
-                bool SomenteKamile = configuration.GetSection("AppSettings")["SomenteKamile"] == "S" ? true : false;
+                bool SomemteGui = configuration.GetSection("AppSettings")["SomemteGui"].ToUpper() == "S" ? true : false;
+                bool SomenteKamile = configuration.GetSection("AppSettings")["SomenteKamile"].ToUpper() == "S" ? true : false;
                 #endregion
 
                 #region Injeção de Dependencia

@@ -11,45 +11,65 @@ namespace Idavolta
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
-
-            var valores = Util.LerOuCriarExcel();
-
-            if (Util.SomemteGui)
+            try
             {
-                groupBoxGuilherme.Location = new Point(307, 133);
-                groupBoxKamile.Visible = false;
-            }
-            else if (Util.SomenteKamile)
-            {
-                groupBoxKamile.Location = new Point(307, 133);
-                groupBoxGuilherme.Visible = false;
-            }
+                txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
-            txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
-            lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
-            lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
+                var valores = Util.LerOuCriarExcel();
+
+                if (Util.SomemteGui)
+                {
+                    groupBoxGuilherme.Location = new Point(307, 133);
+                    groupBoxKamile.Visible = false;
+                    lblTxtValorTotalKamile.Visible = false;
+                    lblValorTotalKamile.Visible = false;
+                }
+                else if (Util.SomenteKamile)
+                {
+                    groupBoxKamile.Location = new Point(307, 133);
+                    groupBoxGuilherme.Visible = false;
+                    lblTxtValorTotalGui.Visible= false;
+                    lblValorTotalGui.Visible= false;
+                }
+
+                txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
+                lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
+                lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
+            }
+            catch (Exception ex)
+            {
+                Util.GravarLog("Erro no Form1_Load: " + ex.Message);
+                throw;
+            }
         }
 
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            if (btnAlterar.Text == "Salvar")
+            try
             {
-                //Salvar Valor da Passagem
+                if (btnAlterar.Text == "Salvar")
+                {
+                    //Salvar Valor da Passagem
 
-                Util.AlterarValorPassagemExcel(Convert.ToDouble(txtboxValorPassagem.Text));
+                    Util.AlterarValorPassagemExcel(Convert.ToDouble(txtboxValorPassagem.Text));
 
-                txtboxValorPassagem.Enabled = false;
-                txtboxValorPassagem.ReadOnly = true;
+                    txtboxValorPassagem.Enabled = false;
+                    txtboxValorPassagem.ReadOnly = true;
 
-                btnAlterar.Text = "Alterar";
+                    btnAlterar.Text = "Alterar";
+                }
+                else
+                {
+                    txtboxValorPassagem.Enabled = true;
+                    txtboxValorPassagem.ReadOnly = false;
+
+                    btnAlterar.Text = "Salvar";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                txtboxValorPassagem.Enabled = true;
-                txtboxValorPassagem.ReadOnly = false;
-
-                btnAlterar.Text = "Salvar";
+                Util.GravarLog("Erro no btnAlterar_Click: " + ex.Message);
+                throw;
             }
         }
 
@@ -86,20 +106,28 @@ namespace Idavolta
                 kamileSelection = TipoCaronaKamile.IdaVoltaKamile;
             }
 
-            double valorGui = 0;
-            double valorKamile = 0;
-            Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, txtboxDatadeHoje.Text, Convert.ToDouble(lblValorTotalGui.Text), Convert.ToDouble(lblValorTotalKamile.Text), out valorKamile, out valorGui);
+            try
+            {
+                double valorGui = 0;
+                double valorKamile = 0;
+                Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, txtboxDatadeHoje.Text, Convert.ToDouble(lblValorTotalGui.Text), Convert.ToDouble(lblValorTotalKamile.Text), out valorKamile, out valorGui);
 
-            double valorTotalGui = Convert.ToDouble(lblValorTotalGui.Text) + valorGui;
-            double valorTotalKamile = Convert.ToDouble(lblValorTotalKamile.Text) + valorKamile;
-            lblValorTotalGui.Text = valorTotalGui.ToString("F2");
-            lblValorTotalKamile.Text = valorTotalKamile.ToString("F2");
+                double valorTotalGui = Convert.ToDouble(lblValorTotalGui.Text) + valorGui;
+                double valorTotalKamile = Convert.ToDouble(lblValorTotalKamile.Text) + valorKamile;
+                lblValorTotalGui.Text = valorTotalGui.ToString("F2");
+                lblValorTotalKamile.Text = valorTotalKamile.ToString("F2");
 
-            lblAviso.Text = "Sucesso!";
-            lblAviso.ForeColor = Color.Green;
-            lblAviso.Visible = true;
-            await Task.Delay(2000); // Espera por 3 segundos
-            lblAviso.Visible = false;
+                lblAviso.Text = "Sucesso!";
+                lblAviso.ForeColor = Color.Green;
+                lblAviso.Visible = true;
+                await Task.Delay(2000); // Espera por 3 segundos
+                lblAviso.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                Util.GravarLog("Erro no btnSalvar_Click: " + ex.Message);
+                throw;
+            }
         }
 
         private void lblValorTotalGui_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
