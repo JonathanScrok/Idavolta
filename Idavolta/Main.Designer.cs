@@ -54,8 +54,26 @@
             btnAnterior = new Button();
             btnProximo = new Button();
             lblAviso = new Label();
+            groupBoxRoger = new GroupBox();
+            lblRoger = new Label();
+            radiobtnSemCaronaRoger = new RadioButton();
+            radiobtnIdaRoger = new RadioButton();
+            radiobtnVoltaRoger = new RadioButton();
+            radiobtnIdaVoltaRoger = new RadioButton();
+            lblTxtValorTotalRoger = new Label();
+            lblValorTotalRoger = new LinkLabel();
+            groupBoxFelipe = new GroupBox();
+            lblFelipe = new Label();
+            radiobtnSemCaronaFelipe = new RadioButton();
+            radiobtnIdaFelipe = new RadioButton();
+            radiobtnVoltaFelipe = new RadioButton();
+            radiobtnIdaVoltaFelipe = new RadioButton();
+            lblTxtValorTotalFelipe = new Label();
+            lblValorTotalFelipe = new LinkLabel();
             groupBoxGuilherme.SuspendLayout();
             groupBoxKamile.SuspendLayout();
+            groupBoxRoger.SuspendLayout();
+            groupBoxFelipe.SuspendLayout();
             SuspendLayout();
             // 
             // lblValorPassagem
@@ -79,7 +97,7 @@
             // lblDataHoje
             // 
             lblDataHoje.AutoSize = true;
-            lblDataHoje.Location = new Point(664, 29);
+            lblDataHoje.Location = new Point(668, 29);
             lblDataHoje.Name = "lblDataHoje";
             lblDataHoje.Size = new Size(78, 15);
             lblDataHoje.TabIndex = 2;
@@ -87,7 +105,7 @@
             // 
             // txtboxDatadeHoje
             // 
-            txtboxDatadeHoje.Location = new Point(664, 47);
+            txtboxDatadeHoje.Location = new Point(668, 47);
             txtboxDatadeHoje.Name = "txtboxDatadeHoje";
             txtboxDatadeHoje.Size = new Size(100, 23);
             txtboxDatadeHoje.TabIndex = 4;
@@ -109,7 +127,7 @@
             groupBoxGuilherme.Controls.Add(radiobtnIdaGui);
             groupBoxGuilherme.Controls.Add(radiobtnVoltaGui);
             groupBoxGuilherme.Controls.Add(radiobtnIdaVoltaGui);
-            groupBoxGuilherme.Location = new Point(140, 133);
+            groupBoxGuilherme.Location = new Point(12, 133);
             groupBoxGuilherme.Name = "groupBoxGuilherme";
             groupBoxGuilherme.Size = new Size(200, 175);
             groupBoxGuilherme.TabIndex = 14;
@@ -181,7 +199,7 @@
             groupBoxKamile.Controls.Add(radiobtnIdaKamile);
             groupBoxKamile.Controls.Add(radiobtnVoltaKamile);
             groupBoxKamile.Controls.Add(radiobtnIdaVoltaKamile);
-            groupBoxKamile.Location = new Point(465, 133);
+            groupBoxKamile.Location = new Point(218, 133);
             groupBoxKamile.Name = "groupBoxKamile";
             groupBoxKamile.Size = new Size(200, 175);
             groupBoxKamile.TabIndex = 15;
@@ -249,7 +267,7 @@
             // btnSalvar
             // 
             btnSalvar.Font = new Font("Segoe UI", 15F);
-            btnSalvar.Location = new Point(324, 314);
+            btnSalvar.Location = new Point(344, 26);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(159, 44);
             btnSalvar.TabIndex = 16;
@@ -262,7 +280,7 @@
             lblValorTotalGui.AutoSize = true;
             lblValorTotalGui.Font = new Font("Segoe UI", 17F);
             lblValorTotalGui.LinkColor = Color.Navy;
-            lblValorTotalGui.Location = new Point(203, 404);
+            lblValorTotalGui.Location = new Point(12, 362);
             lblValorTotalGui.MinimumSize = new Size(100, 50);
             lblValorTotalGui.Name = "lblValorTotalGui";
             lblValorTotalGui.Size = new Size(100, 50);
@@ -276,7 +294,7 @@
             lblValorTotalKamile.AutoSize = true;
             lblValorTotalKamile.Font = new Font("Segoe UI", 17F);
             lblValorTotalKamile.LinkColor = Color.Navy;
-            lblValorTotalKamile.Location = new Point(716, 404);
+            lblValorTotalKamile.Location = new Point(218, 362);
             lblValorTotalKamile.MinimumSize = new Size(100, 50);
             lblValorTotalKamile.Name = "lblValorTotalKamile";
             lblValorTotalKamile.Size = new Size(134, 50);
@@ -289,39 +307,39 @@
             // 
             lblTxtValorTotalGui.AutoSize = true;
             lblTxtValorTotalGui.Font = new Font("Segoe UI", 15F);
-            lblTxtValorTotalGui.Location = new Point(5, 406);
+            lblTxtValorTotalGui.Location = new Point(12, 334);
             lblTxtValorTotalGui.Name = "lblTxtValorTotalGui";
-            lblTxtValorTotalGui.Size = new Size(203, 28);
+            lblTxtValorTotalGui.Size = new Size(153, 28);
             lblTxtValorTotalGui.TabIndex = 19;
-            lblTxtValorTotalGui.Text = "Valor Total Guilherme:";
+            lblTxtValorTotalGui.Text = "Total Guilherme:";
             // 
             // lblTxtValorTotalKamile
             // 
             lblTxtValorTotalKamile.AutoSize = true;
             lblTxtValorTotalKamile.Font = new Font("Segoe UI", 15F);
-            lblTxtValorTotalKamile.Location = new Point(434, 406);
+            lblTxtValorTotalKamile.Location = new Point(218, 334);
             lblTxtValorTotalKamile.Name = "lblTxtValorTotalKamile";
-            lblTxtValorTotalKamile.Size = new Size(287, 28);
+            lblTxtValorTotalKamile.Size = new Size(122, 28);
             lblTxtValorTotalKamile.TabIndex = 20;
-            lblTxtValorTotalKamile.Text = "Valor Total a pagar para Kamile:";
+            lblTxtValorTotalKamile.Text = "Total Kamile:";
             // 
             // btnAnterior
             // 
-            btnAnterior.Location = new Point(635, 76);
+            btnAnterior.Location = new Point(636, 76);
             btnAnterior.Name = "btnAnterior";
             btnAnterior.Size = new Size(75, 23);
             btnAnterior.TabIndex = 21;
-            btnAnterior.Text = "Anterior";
+            btnAnterior.Text = "<";
             btnAnterior.UseVisualStyleBackColor = true;
             btnAnterior.Click += btnAnterior_Click;
             // 
             // btnProximo
             // 
-            btnProximo.Location = new Point(716, 76);
+            btnProximo.Location = new Point(726, 76);
             btnProximo.Name = "btnProximo";
             btnProximo.Size = new Size(75, 23);
             btnProximo.TabIndex = 22;
-            btnProximo.Text = "Próximo";
+            btnProximo.Text = ">";
             btnProximo.UseVisualStyleBackColor = true;
             btnProximo.Click += btnProximo_Click;
             // 
@@ -330,18 +348,216 @@
             lblAviso.AutoSize = true;
             lblAviso.Font = new Font("Arial Rounded MT Bold", 18F, FontStyle.Italic, GraphicsUnit.Point, 0);
             lblAviso.ForeColor = SystemColors.ControlText;
-            lblAviso.Location = new Point(358, 88);
+            lblAviso.Location = new Point(375, 88);
             lblAviso.Name = "lblAviso";
             lblAviso.Size = new Size(76, 28);
             lblAviso.TabIndex = 23;
             lblAviso.Text = "Aviso";
             lblAviso.Visible = false;
             // 
+            // groupBoxRoger
+            // 
+            groupBoxRoger.Controls.Add(lblRoger);
+            groupBoxRoger.Controls.Add(radiobtnSemCaronaRoger);
+            groupBoxRoger.Controls.Add(radiobtnIdaRoger);
+            groupBoxRoger.Controls.Add(radiobtnVoltaRoger);
+            groupBoxRoger.Controls.Add(radiobtnIdaVoltaRoger);
+            groupBoxRoger.Location = new Point(424, 133);
+            groupBoxRoger.Name = "groupBoxRoger";
+            groupBoxRoger.Size = new Size(200, 175);
+            groupBoxRoger.TabIndex = 16;
+            groupBoxRoger.TabStop = false;
+            // 
+            // lblRoger
+            // 
+            lblRoger.AutoSize = true;
+            lblRoger.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblRoger.Location = new Point(58, 0);
+            lblRoger.MinimumSize = new Size(50, 30);
+            lblRoger.Name = "lblRoger";
+            lblRoger.Size = new Size(68, 30);
+            lblRoger.TabIndex = 10;
+            lblRoger.Text = "Roger";
+            // 
+            // radiobtnSemCaronaRoger
+            // 
+            radiobtnSemCaronaRoger.AutoSize = true;
+            radiobtnSemCaronaRoger.Font = new Font("Segoe UI", 14F);
+            radiobtnSemCaronaRoger.Location = new Point(6, 138);
+            radiobtnSemCaronaRoger.Name = "radiobtnSemCaronaRoger";
+            radiobtnSemCaronaRoger.Size = new Size(132, 29);
+            radiobtnSemCaronaRoger.TabIndex = 11;
+            radiobtnSemCaronaRoger.TabStop = true;
+            radiobtnSemCaronaRoger.Text = "Sem Carona";
+            radiobtnSemCaronaRoger.UseVisualStyleBackColor = true;
+            // 
+            // radiobtnIdaRoger
+            // 
+            radiobtnIdaRoger.AutoSize = true;
+            radiobtnIdaRoger.Font = new Font("Segoe UI", 14F);
+            radiobtnIdaRoger.Location = new Point(6, 33);
+            radiobtnIdaRoger.Name = "radiobtnIdaRoger";
+            radiobtnIdaRoger.Size = new Size(56, 29);
+            radiobtnIdaRoger.TabIndex = 11;
+            radiobtnIdaRoger.TabStop = true;
+            radiobtnIdaRoger.Text = "Ida";
+            radiobtnIdaRoger.UseVisualStyleBackColor = true;
+            // 
+            // radiobtnVoltaRoger
+            // 
+            radiobtnVoltaRoger.AutoSize = true;
+            radiobtnVoltaRoger.Font = new Font("Segoe UI", 14F);
+            radiobtnVoltaRoger.Location = new Point(6, 68);
+            radiobtnVoltaRoger.Name = "radiobtnVoltaRoger";
+            radiobtnVoltaRoger.Size = new Size(73, 29);
+            radiobtnVoltaRoger.TabIndex = 12;
+            radiobtnVoltaRoger.TabStop = true;
+            radiobtnVoltaRoger.Text = "Volta";
+            radiobtnVoltaRoger.UseVisualStyleBackColor = true;
+            // 
+            // radiobtnIdaVoltaRoger
+            // 
+            radiobtnIdaVoltaRoger.AutoSize = true;
+            radiobtnIdaVoltaRoger.Font = new Font("Segoe UI", 14F);
+            radiobtnIdaVoltaRoger.Location = new Point(6, 103);
+            radiobtnIdaVoltaRoger.Name = "radiobtnIdaVoltaRoger";
+            radiobtnIdaVoltaRoger.Size = new Size(119, 29);
+            radiobtnIdaVoltaRoger.TabIndex = 13;
+            radiobtnIdaVoltaRoger.TabStop = true;
+            radiobtnIdaVoltaRoger.Text = "Ida e Volta";
+            radiobtnIdaVoltaRoger.UseVisualStyleBackColor = true;
+            // 
+            // lblTxtValorTotalRoger
+            // 
+            lblTxtValorTotalRoger.AutoSize = true;
+            lblTxtValorTotalRoger.Font = new Font("Segoe UI", 15F);
+            lblTxtValorTotalRoger.Location = new Point(424, 334);
+            lblTxtValorTotalRoger.Name = "lblTxtValorTotalRoger";
+            lblTxtValorTotalRoger.Size = new Size(115, 28);
+            lblTxtValorTotalRoger.TabIndex = 25;
+            lblTxtValorTotalRoger.Text = "Total Roger:";
+            // 
+            // lblValorTotalRoger
+            // 
+            lblValorTotalRoger.AutoSize = true;
+            lblValorTotalRoger.Font = new Font("Segoe UI", 17F);
+            lblValorTotalRoger.LinkColor = Color.Navy;
+            lblValorTotalRoger.Location = new Point(424, 362);
+            lblValorTotalRoger.MinimumSize = new Size(100, 50);
+            lblValorTotalRoger.Name = "lblValorTotalRoger";
+            lblValorTotalRoger.Size = new Size(125, 50);
+            lblValorTotalRoger.TabIndex = 24;
+            lblValorTotalRoger.TabStop = true;
+            lblValorTotalRoger.Text = "ValorRoger";
+            lblValorTotalRoger.LinkClicked += lblValorTotalRoger_LinkClicked;
+            // 
+            // groupBoxFelipe
+            // 
+            groupBoxFelipe.Controls.Add(lblFelipe);
+            groupBoxFelipe.Controls.Add(radiobtnSemCaronaFelipe);
+            groupBoxFelipe.Controls.Add(radiobtnIdaFelipe);
+            groupBoxFelipe.Controls.Add(radiobtnVoltaFelipe);
+            groupBoxFelipe.Controls.Add(radiobtnIdaVoltaFelipe);
+            groupBoxFelipe.Location = new Point(630, 133);
+            groupBoxFelipe.Name = "groupBoxFelipe";
+            groupBoxFelipe.Size = new Size(200, 175);
+            groupBoxFelipe.TabIndex = 17;
+            groupBoxFelipe.TabStop = false;
+            // 
+            // lblFelipe
+            // 
+            lblFelipe.AutoSize = true;
+            lblFelipe.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFelipe.Location = new Point(58, 0);
+            lblFelipe.MinimumSize = new Size(50, 30);
+            lblFelipe.Name = "lblFelipe";
+            lblFelipe.Size = new Size(68, 30);
+            lblFelipe.TabIndex = 10;
+            lblFelipe.Text = "Felipe";
+            // 
+            // radiobtnSemCaronaFelipe
+            // 
+            radiobtnSemCaronaFelipe.AutoSize = true;
+            radiobtnSemCaronaFelipe.Font = new Font("Segoe UI", 14F);
+            radiobtnSemCaronaFelipe.Location = new Point(6, 138);
+            radiobtnSemCaronaFelipe.Name = "radiobtnSemCaronaFelipe";
+            radiobtnSemCaronaFelipe.Size = new Size(132, 29);
+            radiobtnSemCaronaFelipe.TabIndex = 11;
+            radiobtnSemCaronaFelipe.TabStop = true;
+            radiobtnSemCaronaFelipe.Text = "Sem Carona";
+            radiobtnSemCaronaFelipe.UseVisualStyleBackColor = true;
+            // 
+            // radiobtnIdaFelipe
+            // 
+            radiobtnIdaFelipe.AutoSize = true;
+            radiobtnIdaFelipe.Font = new Font("Segoe UI", 14F);
+            radiobtnIdaFelipe.Location = new Point(6, 33);
+            radiobtnIdaFelipe.Name = "radiobtnIdaFelipe";
+            radiobtnIdaFelipe.Size = new Size(56, 29);
+            radiobtnIdaFelipe.TabIndex = 11;
+            radiobtnIdaFelipe.TabStop = true;
+            radiobtnIdaFelipe.Text = "Ida";
+            radiobtnIdaFelipe.UseVisualStyleBackColor = true;
+            // 
+            // radiobtnVoltaFelipe
+            // 
+            radiobtnVoltaFelipe.AutoSize = true;
+            radiobtnVoltaFelipe.Font = new Font("Segoe UI", 14F);
+            radiobtnVoltaFelipe.Location = new Point(6, 68);
+            radiobtnVoltaFelipe.Name = "radiobtnVoltaFelipe";
+            radiobtnVoltaFelipe.Size = new Size(73, 29);
+            radiobtnVoltaFelipe.TabIndex = 12;
+            radiobtnVoltaFelipe.TabStop = true;
+            radiobtnVoltaFelipe.Text = "Volta";
+            radiobtnVoltaFelipe.UseVisualStyleBackColor = true;
+            // 
+            // radiobtnIdaVoltaFelipe
+            // 
+            radiobtnIdaVoltaFelipe.AutoSize = true;
+            radiobtnIdaVoltaFelipe.Font = new Font("Segoe UI", 14F);
+            radiobtnIdaVoltaFelipe.Location = new Point(6, 103);
+            radiobtnIdaVoltaFelipe.Name = "radiobtnIdaVoltaFelipe";
+            radiobtnIdaVoltaFelipe.Size = new Size(119, 29);
+            radiobtnIdaVoltaFelipe.TabIndex = 13;
+            radiobtnIdaVoltaFelipe.TabStop = true;
+            radiobtnIdaVoltaFelipe.Text = "Ida e Volta";
+            radiobtnIdaVoltaFelipe.UseVisualStyleBackColor = true;
+            // 
+            // lblTxtValorTotalFelipe
+            // 
+            lblTxtValorTotalFelipe.AutoSize = true;
+            lblTxtValorTotalFelipe.Font = new Font("Segoe UI", 15F);
+            lblTxtValorTotalFelipe.Location = new Point(630, 334);
+            lblTxtValorTotalFelipe.Name = "lblTxtValorTotalFelipe";
+            lblTxtValorTotalFelipe.Size = new Size(115, 28);
+            lblTxtValorTotalFelipe.TabIndex = 27;
+            lblTxtValorTotalFelipe.Text = "Total Felipe:";
+            // 
+            // lblValorTotalFelipe
+            // 
+            lblValorTotalFelipe.AutoSize = true;
+            lblValorTotalFelipe.Font = new Font("Segoe UI", 17F);
+            lblValorTotalFelipe.LinkColor = Color.Navy;
+            lblValorTotalFelipe.Location = new Point(630, 362);
+            lblValorTotalFelipe.MinimumSize = new Size(100, 50);
+            lblValorTotalFelipe.Name = "lblValorTotalFelipe";
+            lblValorTotalFelipe.Size = new Size(126, 50);
+            lblValorTotalFelipe.TabIndex = 26;
+            lblValorTotalFelipe.TabStop = true;
+            lblValorTotalFelipe.Text = "ValorFelipe";
+            lblValorTotalFelipe.LinkClicked += lblValorTotalFelipe_LinkClicked;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(848, 467);
+            Controls.Add(lblTxtValorTotalFelipe);
+            Controls.Add(lblValorTotalFelipe);
+            Controls.Add(groupBoxFelipe);
+            Controls.Add(lblTxtValorTotalRoger);
+            Controls.Add(lblValorTotalRoger);
+            Controls.Add(groupBoxRoger);
             Controls.Add(lblAviso);
             Controls.Add(btnProximo);
             Controls.Add(btnAnterior);
@@ -357,7 +573,8 @@
             Controls.Add(lblDataHoje);
             Controls.Add(txtboxValorPassagem);
             Controls.Add(lblValorPassagem);
-            Icon = (Icon)resources.GetObject("$this.Icon");
+            //Icon = (Icon)resources.GetObject("$this.Icon");
+            this.Icon = new Icon("F:/Documentos/Vs Projetos/Idavolta/Idavolta/Icon-IdaVolta.ico");
             Name = "Main";
             Text = "Ida e Volta";
             Load += Form1_Load;
@@ -365,6 +582,10 @@
             groupBoxGuilherme.PerformLayout();
             groupBoxKamile.ResumeLayout(false);
             groupBoxKamile.PerformLayout();
+            groupBoxRoger.ResumeLayout(false);
+            groupBoxRoger.PerformLayout();
+            groupBoxFelipe.ResumeLayout(false);
+            groupBoxFelipe.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -398,5 +619,54 @@
         private Button btnAnterior;
         private Button btnProximo;
         private Label lblAviso;
+        private GroupBox groupBoxRoger;
+        private Label lblRoger;
+        private RadioButton radiobtnSemCaronaRoger;
+        private RadioButton radiobtnIdaRoger;
+        private RadioButton radiobtnVoltaRoger;
+        private RadioButton radiobtnIdaVoltaRoger;
+        private Label lblTxtValorTotalRoger;
+        private LinkLabel lblValorTotalRoger;
+        private GroupBox groupBoxFelipe;
+        private Label lblFelipe;
+        private RadioButton radiobtnSemCaronaFelipe;
+        private RadioButton radiobtnIdaFelipe;
+        private RadioButton radiobtnVoltaFelipe;
+        private RadioButton radiobtnIdaVoltaFelipe;
+        private Label lblTxtValorTotalFelipe;
+        private LinkLabel lblValorTotalFelipe;
+
+        public Label LblValorPassagem { get => lblValorPassagem; set => lblValorPassagem = value; }
+        //public Label LblValorPassagem
+        //{
+        //    get { return lblValorPassagem; }
+        //    set { lblValorPassagem = value; }
+        //}
+        public TextBox TxtboxValorPassagem { get => txtboxValorPassagem; set => txtboxValorPassagem = value; }
+        public Label LblDataHoje { get => lblDataHoje; set => lblDataHoje = value; }
+        public TextBox TxtboxDatadeHoje { get => txtboxDatadeHoje; set => txtboxDatadeHoje = value; }
+        public Button BtnAlterar { get => btnAlterar; set => btnAlterar = value; }
+        public ImageList ImageList1 { get => imageList1; set => imageList1 = value; }
+        public NotifyIcon NotifyIcon1 { get => notifyIcon1; set => notifyIcon1 = value; }
+        public RadioButton RadiobtnIdaGui { get => radiobtnIdaGui; set => radiobtnIdaGui = value; }
+        public RadioButton RadiobtnVoltaGui { get => radiobtnVoltaGui; set => radiobtnVoltaGui = value; }
+        public RadioButton RadiobtnIdaVoltaGui { get => radiobtnIdaVoltaGui; set => radiobtnIdaVoltaGui = value; }
+        public Label LblGuilherme { get => lblGuilherme; set => lblGuilherme = value; }
+        public Label LblKamile { get => lblKamile; set => lblKamile = value; }
+        public RadioButton RadiobtnIdaKamile { get => radiobtnIdaKamile; set => radiobtnIdaKamile = value; }
+        public RadioButton RadiobtnVoltaKamile { get => radiobtnVoltaKamile; set => radiobtnVoltaKamile = value; }
+        public RadioButton RadiobtnIdaVoltaKamile { get => radiobtnIdaVoltaKamile; set => radiobtnIdaVoltaKamile = value; }
+        public GroupBox GroupBoxGuilherme { get => groupBoxGuilherme; set => groupBoxGuilherme = value; }
+        public GroupBox GroupBoxKamile { get => groupBoxKamile; set => groupBoxKamile = value; }
+        public Button BtnSalvar { get => btnSalvar; set => btnSalvar = value; }
+        public LinkLabel LblValorTotalGui { get => lblValorTotalGui; set => lblValorTotalGui = value; }
+        public LinkLabel LblValorTotalKamile { get => lblValorTotalKamile; set => lblValorTotalKamile = value; }
+        public Label LblTxtValorTotalGui { get => lblTxtValorTotalGui; set => lblTxtValorTotalGui = value; }
+        public Label LblTxtValorTotalKamile { get => lblTxtValorTotalKamile; set => lblTxtValorTotalKamile = value; }
+        public RadioButton RadioSemCaronaGui { get => radioSemCaronaGui; set => radioSemCaronaGui = value; }
+        public RadioButton RadioSemCaronaKamile { get => radioSemCaronaKamile; set => radioSemCaronaKamile = value; }
+        public Button BtnAnterior { get => btnAnterior; set => btnAnterior = value; }
+        public Button BtnProximo { get => btnProximo; set => btnProximo = value; }
+        public Label LblAviso { get => lblAviso; set => lblAviso = value; }
     }
 }

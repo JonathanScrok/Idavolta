@@ -30,4 +30,28 @@ namespace Idavolta
         [Description("IdaVolta")]
         IdaVoltaKamile,
     }
+
+    public enum TipoCaronaRoger
+    {
+        [Description("SemCarona")]
+        SemCaronaRoger,
+        [Description("Ida")]
+        IdaRoger,
+        [Description("Volta")]
+        VoltaRoger,
+        [Description("IdaVolta")]
+        IdaVoltaRoger
+    }
+
+    public enum TipoCaronaFelipe
+    {
+        [Description("SemCarona")]
+        SemCaronaFelipe,
+        [Description("Ida")]
+        IdaFelipe,
+        [Description("Volta")]
+        VoltaFelipe,
+        [Description("IdaVolta")]
+        IdaVoltaFelipe
+    }
 }
