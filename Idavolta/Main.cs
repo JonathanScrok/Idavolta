@@ -16,6 +16,8 @@ namespace Idavolta
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.ActiveControl = btnLogs;
+
             try
             {
                 txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");

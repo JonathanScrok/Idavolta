@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idavolta", "Idavolta\Idavolta.csproj", "{CA6FAC52-A5FA-4EB7-87D9-A4A0464F5D6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfiguraIdaVolta", "ConfiguraIdaVolta\ConfiguraIdaVolta.csproj", "{7AC0389C-9505-445C-8E87-7508B8087BD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CA6FAC52-A5FA-4EB7-87D9-A4A0464F5D6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA6FAC52-A5FA-4EB7-87D9-A4A0464F5D6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA6FAC52-A5FA-4EB7-87D9-A4A0464F5D6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AC0389C-9505-445C-8E87-7508B8087BD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC0389C-9505-445C-8E87-7508B8087BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC0389C-9505-445C-8E87-7508B8087BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC0389C-9505-445C-8E87-7508B8087BD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
