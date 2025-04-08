@@ -18,8 +18,6 @@ namespace Idavolta
         {
             try
             {
-                CentralizarControles();
-
                 txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
                 var valores = Util.LerOuCriarExcel();
@@ -123,6 +121,7 @@ namespace Idavolta
                 lblValorTotalRoger.Text = valores.valoresRoger.ToString("F2");
                 lblValorTotalFelipe.Text = valores.valoresFelipe.ToString("F2");
 
+                CentralizarControles();
             }
             catch (Exception ex)
             {
@@ -413,6 +412,12 @@ namespace Idavolta
             lblValorTotalRoger.LinkColor = Color.Chocolate;
             lblValorTotalFelipe.LinkColor = Color.Chocolate;
 
+        }
+
+        private void btnLogs_Click(object sender, EventArgs e)
+        {
+            string caminho = Util.CaminhoArquivoLog;
+            Process.Start("explorer.exe", caminho);
         }
     }
 }

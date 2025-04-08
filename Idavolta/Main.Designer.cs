@@ -70,6 +70,7 @@
             radiobtnIdaVoltaFelipe = new RadioButton();
             lblTxtValorTotalFelipe = new Label();
             lblValorTotalFelipe = new LinkLabel();
+            btnLogs = new Button();
             groupBoxGuilherme.SuspendLayout();
             groupBoxKamile.SuspendLayout();
             groupBoxRoger.SuspendLayout();
@@ -97,7 +98,7 @@
             // lblDataHoje
             // 
             lblDataHoje.AutoSize = true;
-            lblDataHoje.Location = new Point(668, 29);
+            lblDataHoje.Location = new Point(832, 29);
             lblDataHoje.Name = "lblDataHoje";
             lblDataHoje.Size = new Size(78, 15);
             lblDataHoje.TabIndex = 2;
@@ -105,7 +106,7 @@
             // 
             // txtboxDatadeHoje
             // 
-            txtboxDatadeHoje.Location = new Point(668, 47);
+            txtboxDatadeHoje.Location = new Point(832, 47);
             txtboxDatadeHoje.Name = "txtboxDatadeHoje";
             txtboxDatadeHoje.Size = new Size(100, 23);
             txtboxDatadeHoje.TabIndex = 4;
@@ -199,7 +200,7 @@
             groupBoxKamile.Controls.Add(radiobtnIdaKamile);
             groupBoxKamile.Controls.Add(radiobtnVoltaKamile);
             groupBoxKamile.Controls.Add(radiobtnIdaVoltaKamile);
-            groupBoxKamile.Location = new Point(218, 133);
+            groupBoxKamile.Location = new Point(257, 133);
             groupBoxKamile.Name = "groupBoxKamile";
             groupBoxKamile.Size = new Size(200, 175);
             groupBoxKamile.TabIndex = 15;
@@ -267,7 +268,7 @@
             // btnSalvar
             // 
             btnSalvar.Font = new Font("Segoe UI", 15F);
-            btnSalvar.Location = new Point(344, 26);
+            btnSalvar.Location = new Point(391, 29);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(159, 44);
             btnSalvar.TabIndex = 16;
@@ -280,7 +281,7 @@
             lblValorTotalGui.AutoSize = true;
             lblValorTotalGui.Font = new Font("Segoe UI", 17F);
             lblValorTotalGui.LinkColor = Color.Navy;
-            lblValorTotalGui.Location = new Point(12, 362);
+            lblValorTotalGui.Location = new Point(160, 332);
             lblValorTotalGui.MinimumSize = new Size(100, 50);
             lblValorTotalGui.Name = "lblValorTotalGui";
             lblValorTotalGui.Size = new Size(100, 50);
@@ -294,7 +295,7 @@
             lblValorTotalKamile.AutoSize = true;
             lblValorTotalKamile.Font = new Font("Segoe UI", 17F);
             lblValorTotalKamile.LinkColor = Color.Navy;
-            lblValorTotalKamile.Location = new Point(218, 362);
+            lblValorTotalKamile.Location = new Point(374, 332);
             lblValorTotalKamile.MinimumSize = new Size(100, 50);
             lblValorTotalKamile.Name = "lblValorTotalKamile";
             lblValorTotalKamile.Size = new Size(134, 50);
@@ -317,7 +318,7 @@
             // 
             lblTxtValorTotalKamile.AutoSize = true;
             lblTxtValorTotalKamile.Font = new Font("Segoe UI", 15F);
-            lblTxtValorTotalKamile.Location = new Point(218, 334);
+            lblTxtValorTotalKamile.Location = new Point(257, 334);
             lblTxtValorTotalKamile.Name = "lblTxtValorTotalKamile";
             lblTxtValorTotalKamile.Size = new Size(122, 28);
             lblTxtValorTotalKamile.TabIndex = 20;
@@ -325,7 +326,7 @@
             // 
             // btnAnterior
             // 
-            btnAnterior.Location = new Point(636, 76);
+            btnAnterior.Location = new Point(800, 76);
             btnAnterior.Name = "btnAnterior";
             btnAnterior.Size = new Size(75, 23);
             btnAnterior.TabIndex = 21;
@@ -335,7 +336,7 @@
             // 
             // btnProximo
             // 
-            btnProximo.Location = new Point(726, 76);
+            btnProximo.Location = new Point(890, 76);
             btnProximo.Name = "btnProximo";
             btnProximo.Size = new Size(75, 23);
             btnProximo.TabIndex = 22;
@@ -348,7 +349,7 @@
             lblAviso.AutoSize = true;
             lblAviso.Font = new Font("Arial Rounded MT Bold", 18F, FontStyle.Italic, GraphicsUnit.Point, 0);
             lblAviso.ForeColor = SystemColors.ControlText;
-            lblAviso.Location = new Point(375, 88);
+            lblAviso.Location = new Point(427, 87);
             lblAviso.Name = "lblAviso";
             lblAviso.Size = new Size(76, 28);
             lblAviso.TabIndex = 23;
@@ -362,7 +363,7 @@
             groupBoxRoger.Controls.Add(radiobtnIdaRoger);
             groupBoxRoger.Controls.Add(radiobtnVoltaRoger);
             groupBoxRoger.Controls.Add(radiobtnIdaVoltaRoger);
-            groupBoxRoger.Location = new Point(424, 133);
+            groupBoxRoger.Location = new Point(507, 133);
             groupBoxRoger.Name = "groupBoxRoger";
             groupBoxRoger.Size = new Size(200, 175);
             groupBoxRoger.TabIndex = 16;
@@ -431,7 +432,7 @@
             // 
             lblTxtValorTotalRoger.AutoSize = true;
             lblTxtValorTotalRoger.Font = new Font("Segoe UI", 15F);
-            lblTxtValorTotalRoger.Location = new Point(424, 334);
+            lblTxtValorTotalRoger.Location = new Point(507, 334);
             lblTxtValorTotalRoger.Name = "lblTxtValorTotalRoger";
             lblTxtValorTotalRoger.Size = new Size(115, 28);
             lblTxtValorTotalRoger.TabIndex = 25;
@@ -442,7 +443,7 @@
             lblValorTotalRoger.AutoSize = true;
             lblValorTotalRoger.Font = new Font("Segoe UI", 17F);
             lblValorTotalRoger.LinkColor = Color.Navy;
-            lblValorTotalRoger.Location = new Point(424, 362);
+            lblValorTotalRoger.Location = new Point(619, 332);
             lblValorTotalRoger.MinimumSize = new Size(100, 50);
             lblValorTotalRoger.Name = "lblValorTotalRoger";
             lblValorTotalRoger.Size = new Size(125, 50);
@@ -458,7 +459,7 @@
             groupBoxFelipe.Controls.Add(radiobtnIdaFelipe);
             groupBoxFelipe.Controls.Add(radiobtnVoltaFelipe);
             groupBoxFelipe.Controls.Add(radiobtnIdaVoltaFelipe);
-            groupBoxFelipe.Location = new Point(630, 133);
+            groupBoxFelipe.Location = new Point(741, 133);
             groupBoxFelipe.Name = "groupBoxFelipe";
             groupBoxFelipe.Size = new Size(200, 175);
             groupBoxFelipe.TabIndex = 17;
@@ -527,7 +528,7 @@
             // 
             lblTxtValorTotalFelipe.AutoSize = true;
             lblTxtValorTotalFelipe.Font = new Font("Segoe UI", 15F);
-            lblTxtValorTotalFelipe.Location = new Point(630, 334);
+            lblTxtValorTotalFelipe.Location = new Point(741, 334);
             lblTxtValorTotalFelipe.Name = "lblTxtValorTotalFelipe";
             lblTxtValorTotalFelipe.Size = new Size(115, 28);
             lblTxtValorTotalFelipe.TabIndex = 27;
@@ -538,7 +539,7 @@
             lblValorTotalFelipe.AutoSize = true;
             lblValorTotalFelipe.Font = new Font("Segoe UI", 17F);
             lblValorTotalFelipe.LinkColor = Color.Navy;
-            lblValorTotalFelipe.Location = new Point(630, 362);
+            lblValorTotalFelipe.Location = new Point(849, 332);
             lblValorTotalFelipe.MinimumSize = new Size(100, 50);
             lblValorTotalFelipe.Name = "lblValorTotalFelipe";
             lblValorTotalFelipe.Size = new Size(126, 50);
@@ -547,11 +548,23 @@
             lblValorTotalFelipe.Text = "ValorFelipe";
             lblValorTotalFelipe.LinkClicked += lblValorTotalFelipe_LinkClicked;
             // 
+            // btnLogs
+            // 
+            btnLogs.BackColor = SystemColors.Info;
+            btnLogs.Location = new Point(12, 473);
+            btnLogs.Name = "btnLogs";
+            btnLogs.Size = new Size(75, 23);
+            btnLogs.TabIndex = 28;
+            btnLogs.Text = "Logs";
+            btnLogs.UseVisualStyleBackColor = false;
+            btnLogs.Click += btnLogs_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(848, 467);
+            ClientSize = new Size(971, 508);
+            Controls.Add(btnLogs);
             Controls.Add(lblTxtValorTotalFelipe);
             Controls.Add(lblValorTotalFelipe);
             Controls.Add(groupBoxFelipe);
@@ -635,6 +648,7 @@
         private RadioButton radiobtnIdaVoltaFelipe;
         private Label lblTxtValorTotalFelipe;
         private LinkLabel lblValorTotalFelipe;
+        private Button btnLogs;
 
         public Label LblValorPassagem { get => lblValorPassagem; set => lblValorPassagem = value; }
         //public Label LblValorPassagem
