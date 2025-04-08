@@ -573,11 +573,11 @@
             Controls.Add(lblDataHoje);
             Controls.Add(txtboxValorPassagem);
             Controls.Add(lblValorPassagem);
-            //Icon = (Icon)resources.GetObject("$this.Icon");
-            this.Icon = new Icon("F:/Documentos/Vs Projetos/Idavolta/Idavolta/Icon-IdaVolta.ico");
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Main";
             Text = "Ida e Volta";
             Load += Form1_Load;
+            Resize += Form1_Resize;
             groupBoxGuilherme.ResumeLayout(false);
             groupBoxGuilherme.PerformLayout();
             groupBoxKamile.ResumeLayout(false);

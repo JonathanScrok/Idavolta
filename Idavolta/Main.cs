@@ -18,6 +18,8 @@ namespace Idavolta
         {
             try
             {
+                CentralizarControles();
+
                 txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
                 var valores = Util.LerOuCriarExcel();
@@ -127,6 +129,11 @@ namespace Idavolta
                 Util.GravarLog("Erro no Form1_Load: " + ex.Message);
                 throw;
             }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            CentralizarControles();
         }
 
         private void btnAlterar_Click(object sender, EventArgs e)
@@ -306,6 +313,67 @@ namespace Idavolta
         private void btnProximo_Click(object sender, EventArgs e)
         {
             txtboxDatadeHoje.Text = Util.DiaSeguinte(Convert.ToDateTime(txtboxDatadeHoje.Text)).ToString("dd/MM/yyyy");
+        }
+
+        private void CentralizarControles()
+        {
+            int formWidth = this.ClientSize.Width;
+            int formHeight = this.ClientSize.Height;
+
+            // Centralizar botão Salvar
+            int topoSalvar = 20;
+            btnSalvar.Top = topoSalvar;
+            btnSalvar.Left = (formWidth - btnSalvar.Width) / 2;
+
+            // Arrays dos GroupBoxes e Labels
+            GroupBox[] todosGrupos = { groupBoxFelipe, groupBoxGuilherme, groupBoxKamile, groupBoxRoger };
+            Label[] labelsTxt = { lblTxtValorTotalFelipe, lblTxtValorTotalGui, lblTxtValorTotalKamile, lblTxtValorTotalRoger };
+            Label[] labelsVal = { lblValorTotalFelipe, lblValorTotalGui, lblValorTotalKamile, lblValorTotalRoger };
+
+            // Filtro apenas dos grupos visíveis
+            var gruposVisiveis = todosGrupos
+                .Select((g, i) => new { Grupo = g, LabelTxt = labelsTxt[i], LabelVal = labelsVal[i] })
+                .Where(x => x.Grupo.Visible)
+                .ToList();
+
+            if (gruposVisiveis.Count == 0) return; // se nenhum estiver visível, não faz nada
+
+            int espacamento = 40;
+
+            // Largura total ocupada pelos grupos + espaçamentos
+            int totalWidth = gruposVisiveis.Sum(x => x.Grupo.Width) + espacamento * (gruposVisiveis.Count - 1);
+
+            // Posição inicial à esquerda para centralizar
+            int leftInicial = (formWidth - totalWidth) / 2;
+            int topBase = (formHeight - gruposVisiveis[0].Grupo.Height - 30) / 2;
+
+            int leftAtual = leftInicial;
+            foreach (var item in gruposVisiveis)
+            {
+                // Posicionar GroupBox
+                item.Grupo.Left = leftAtual;
+                item.Grupo.Top = topBase;
+
+                // Posicionar labels abaixo do GroupBox
+                item.LabelTxt.Top = item.Grupo.Bottom + 5;
+                item.LabelTxt.Left = item.Grupo.Left;
+
+                item.LabelVal.Top = item.LabelTxt.Top;
+                item.LabelVal.Left = item.LabelTxt.Right + 5;
+
+                // Avança para o próximo com margem
+                leftAtual += item.Grupo.Width + espacamento;
+            }
+
+            // Posicionar os controles fixos à direita
+            int margemDireitaLblData = 232;
+            int margemDireitaAnterior = 264;
+            int margemDireitaProximo = 174;
+
+            lblDataHoje.Location = new Point(formWidth - margemDireitaLblData, 29);
+            txtboxDatadeHoje.Location = new Point(formWidth - margemDireitaLblData, 47);
+            btnAnterior.Location = new Point(formWidth - margemDireitaAnterior, 76);
+            btnProximo.Location = new Point(formWidth - margemDireitaProximo, 76);
         }
 
         private void PersonalizarEstilo()
