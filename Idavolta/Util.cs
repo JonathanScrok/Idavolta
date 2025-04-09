@@ -173,7 +173,7 @@ namespace Idavolta
         #endregion
 
         #region ALTERA O ARQUIVO EXCEL
-        public static void AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, TipoCaronaRoger TipodaCaronaRoger, TipoCaronaFelipe TipodaCaronaFelipe, string DataCarona, double valorTotalAnteriorGui, double valorTotalAnteriorKamile, double valorTotalAnteriorRoger, double valorTotalAnteriorFelipe, out double valorKamile, out double valorGui, out double valorRoger, out double valorFelipe, char Opcao = '1')
+        public static bool AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, TipoCaronaRoger TipodaCaronaRoger, TipoCaronaFelipe TipodaCaronaFelipe, string DataCarona, double valorTotalAnteriorGui, double valorTotalAnteriorKamile, double valorTotalAnteriorRoger, double valorTotalAnteriorFelipe, out double valorKamile, out double valorGui, out double valorRoger, out double valorFelipe, char Opcao = '1')
         {
             try
             {
@@ -219,7 +219,7 @@ namespace Idavolta
                     if (string.IsNullOrEmpty(resumoCaronas))
                         resumoCaronas = "F:" + GetEnumDescription(TipodaCaronaFelipe);
                     else
-                        resumoCaronas = resumoCaronas + " F:" + 
+                        resumoCaronas = resumoCaronas + " F:" +
                             GetEnumDescription(TipodaCaronaFelipe);
                 }
 
@@ -228,63 +228,78 @@ namespace Idavolta
 
                 if (File.Exists(DiretorioArquivoExcel + NomeArquivoExcel) && Opcao == '1')
                 {
-                    GravarLog("Alterando o arquivo Excel");
-
-                    // Se existir, abre o arquivo Excel existente e adiciona dados
-                    using (ExcelPackage package = new ExcelPackage(new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel)))
+                    try
                     {
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets["Planilha1"];
-                        int linhaInicial = worksheet.Dimension.End.Row + 1;
+                        GravarLog("Alterando o arquivo Excel");
 
-                        worksheet.Cells[linhaInicial, 1].Value = DataCarona;
-                        if (TipodaCaronaGui == TipoCaronaGui.SemCaronaGui)
-                            worksheet.Cells[linhaInicial, 2].Value = "";
-                        else
-                            worksheet.Cells[linhaInicial, 2].Value = valorGui;
-
-                        if (TipodaCaronaKamile == TipoCaronaKamile.SemCaronaKamile)
-                            worksheet.Cells[linhaInicial, 3].Value = "";
-                        else
-                            worksheet.Cells[linhaInicial, 3].Value = valorKamile;
-
-                        if (TipodaCaronaRoger == TipoCaronaRoger.SemCaronaRoger)
-                            worksheet.Cells[linhaInicial, 4].Value = "";
-                        else
-                            worksheet.Cells[linhaInicial, 4].Value = valorRoger;
-
-                        if (TipodaCaronaFelipe == TipoCaronaFelipe.SemCaronaFelipe)
-                            worksheet.Cells[linhaInicial, 5].Value = "";
-                        else
-                            worksheet.Cells[linhaInicial, 5].Value = valorFelipe;
-
-                        worksheet.Cells[linhaInicial, 6].Value = resumoCaronas;
-
-                        if (valorTotalAnteriorFelipe > 0 || valorFelipe > 0)
+                        // Se existir, abre o arquivo Excel existente e adiciona dados
+                        using (ExcelPackage package = new ExcelPackage(new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel)))
                         {
-                            worksheet.Cells[1, 10].Value = "VALOR TOTAL FELIPE: " + (valorTotalAnteriorFelipe + valorFelipe).ToString("F2");
-                            worksheet.Column(10).Width = 26;
-                            worksheet.Cells["J1"].Style.Font.Bold = true;
-                            worksheet.Cells["J1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells["J1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets["Planilha1"];
+                            int linhaInicial = worksheet.Dimension.End.Row + 1;
+
+                            worksheet.Cells[linhaInicial, 1].Value = DataCarona;
+                            if (TipodaCaronaGui == TipoCaronaGui.SemCaronaGui)
+                                worksheet.Cells[linhaInicial, 2].Value = "";
+                            else
+                                worksheet.Cells[linhaInicial, 2].Value = valorGui;
+
+                            if (TipodaCaronaKamile == TipoCaronaKamile.SemCaronaKamile)
+                                worksheet.Cells[linhaInicial, 3].Value = "";
+                            else
+                                worksheet.Cells[linhaInicial, 3].Value = valorKamile;
+
+                            if (TipodaCaronaRoger == TipoCaronaRoger.SemCaronaRoger)
+                                worksheet.Cells[linhaInicial, 4].Value = "";
+                            else
+                                worksheet.Cells[linhaInicial, 4].Value = valorRoger;
+
+                            if (TipodaCaronaFelipe == TipoCaronaFelipe.SemCaronaFelipe)
+                                worksheet.Cells[linhaInicial, 5].Value = "";
+                            else
+                                worksheet.Cells[linhaInicial, 5].Value = valorFelipe;
+
+                            worksheet.Cells[linhaInicial, 6].Value = resumoCaronas;
+
+                            if (valorTotalAnteriorFelipe > 0 || valorFelipe > 0)
+                            {
+                                worksheet.Cells[1, 10].Value = "VALOR TOTAL FELIPE: " + (valorTotalAnteriorFelipe + valorFelipe).ToString("F2");
+                                worksheet.Column(10).Width = 26;
+                                worksheet.Cells["J1"].Style.Font.Bold = true;
+                                worksheet.Cells["J1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                worksheet.Cells["J1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
+                            }
+
+                            if (valorTotalAnteriorRoger > 0 || valorRoger > 0)
+                            {
+                                worksheet.Cells[1, 11].Value = "VALOR TOTAL ROGER: " + (valorTotalAnteriorRoger + valorRoger).ToString("F2");
+                                worksheet.Column(11).Width = 26;
+                                worksheet.Cells["K1"].Style.Font.Bold = true;
+                                worksheet.Cells["K1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                worksheet.Cells["K1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
+                            }
+
+                            if (valorTotalAnteriorGui > 0 || valorGui > 0)
+                                worksheet.Cells[1, 12].Value = "VALOR TOTAL GUI: " + (valorTotalAnteriorGui + valorGui).ToString("F2");
+
+                            if (valorTotalAnteriorKamile > 0 || valorKamile > 0)
+                                worksheet.Cells[1, 13].Value = "VALOR TOTAL KAMILE: " + (valorTotalAnteriorKamile + valorKamile).ToString("F2");
+
+                            package.Save();
+                            GravarLog("Finalizado! Dados adicionados ao arquivo Excel existente!");
                         }
-
-                        if (valorTotalAnteriorRoger > 0 || valorRoger > 0)
-                        {
-                            worksheet.Cells[1, 11].Value = "VALOR TOTAL ROGER: " + (valorTotalAnteriorRoger + valorRoger).ToString("F2");
-                            worksheet.Column(11).Width = 26;
-                            worksheet.Cells["K1"].Style.Font.Bold = true;
-                            worksheet.Cells["K1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells["K1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
-                        }
-
-                        if (valorTotalAnteriorGui > 0 || valorGui > 0)
-                            worksheet.Cells[1, 12].Value = "VALOR TOTAL GUI: " + (valorTotalAnteriorGui + valorGui).ToString("F2");
-
-                        if (valorTotalAnteriorKamile > 0 || valorKamile > 0)
-                            worksheet.Cells[1, 13].Value = "VALOR TOTAL KAMILE: " + (valorTotalAnteriorKamile + valorKamile).ToString("F2");
-
-                        package.Save();
-                        GravarLog("Finalizado! Dados adicionados ao arquivo Excel existente!");
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        MessageBox.Show("Feche a janela do arquivo Excel!", "Arquivo em uso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        GravarLog("Erro: Arquivo em uso. Não foi possível salvar.");
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erro inesperado: " + ex.Message);
+                        GravarLog("Erro inesperado: " + ex.ToString());
+                        return false;
                     }
                 }
                 else
@@ -374,6 +389,8 @@ namespace Idavolta
                         GravarLog("Finalizado! Dados já no novo arquivo Excel!");
                     }
                 }
+
+                return true;
             }
             catch (Exception ex)
             {

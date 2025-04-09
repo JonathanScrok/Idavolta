@@ -259,19 +259,26 @@ namespace Idavolta
                 double valorKamile = 0;
                 double valorRoger = 0;
                 double valorFelipe = 0;
-                Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, RogerSelection, FelipeSelection, txtboxDatadeHoje.Text, Convert.ToDouble(lblValorTotalGui.Text), Convert.ToDouble(lblValorTotalKamile.Text), Convert.ToDouble(lblValorTotalRoger.Text), Convert.ToDouble(lblValorTotalFelipe.Text), out valorKamile, out valorGui, out valorRoger, out valorFelipe);
+                bool result = Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, RogerSelection, FelipeSelection, txtboxDatadeHoje.Text, Convert.ToDouble(lblValorTotalGui.Text), Convert.ToDouble(lblValorTotalKamile.Text), Convert.ToDouble(lblValorTotalRoger.Text), Convert.ToDouble(lblValorTotalFelipe.Text), out valorKamile, out valorGui, out valorRoger, out valorFelipe);
 
-                double valorTotalGui = Convert.ToDouble(lblValorTotalGui.Text) + valorGui;
-                double valorTotalKamile = Convert.ToDouble(lblValorTotalKamile.Text) + valorKamile;
-                double valorTotalRoger = Convert.ToDouble(lblValorTotalRoger.Text) + valorRoger;
-                double valorTotalFelipe = Convert.ToDouble(lblValorTotalFelipe.Text) + valorFelipe;
-                lblValorTotalGui.Text = valorTotalGui.ToString("F2");
-                lblValorTotalKamile.Text = valorTotalKamile.ToString("F2");
-                lblValorTotalRoger.Text = valorTotalRoger.ToString("F2");
-                lblValorTotalFelipe.Text = valorTotalFelipe.ToString("F2");
+                if (result)
+                {
+                    double valorTotalGui = Convert.ToDouble(lblValorTotalGui.Text) + valorGui;
+                    double valorTotalKamile = Convert.ToDouble(lblValorTotalKamile.Text) + valorKamile;
+                    double valorTotalRoger = Convert.ToDouble(lblValorTotalRoger.Text) + valorRoger;
+                    double valorTotalFelipe = Convert.ToDouble(lblValorTotalFelipe.Text) + valorFelipe;
+                    lblValorTotalGui.Text = valorTotalGui.ToString("F2");
+                    lblValorTotalKamile.Text = valorTotalKamile.ToString("F2");
+                    lblValorTotalRoger.Text = valorTotalRoger.ToString("F2");
+                    lblValorTotalFelipe.Text = valorTotalFelipe.ToString("F2");
 
-                lblAviso.Text = "Sucesso!";
-                lblAviso.ForeColor = Color.Green;
+                    lblAviso.Text = "Sucesso!";
+                    lblAviso.ForeColor = Color.Green;
+                }
+                else {
+                    lblAviso.Text = "Erro!";
+                    lblAviso.ForeColor = Color.Red;
+                }
                 lblAviso.Visible = true;
                 await Task.Delay(2000); // Espera por 3 segundos
                 lblAviso.Visible = false;
