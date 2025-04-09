@@ -145,6 +145,9 @@ namespace Idavolta
                 {
                     //Salvar Valor da Passagem
 
+                    if (txtboxValorPassagem.Text.Contains("."))
+                        txtboxValorPassagem.Text = txtboxValorPassagem.Text.Replace(".", ",");
+
                     Util.AlterarValorPassagemExcel(Convert.ToDouble(txtboxValorPassagem.Text));
 
                     txtboxValorPassagem.Enabled = false;
