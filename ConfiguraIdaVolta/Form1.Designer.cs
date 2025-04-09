@@ -30,6 +30,7 @@ namespace ConfiguraIdaVolta
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             lblTema = new Label();
             lblSomenteGui = new Label();
             lblSomenteKamile = new Label();
@@ -51,6 +52,8 @@ namespace ConfiguraIdaVolta
             cmbBoxSomenteFelipe = new ComboBox();
             cmbBoxSomenteRogerFelipe = new ComboBox();
             btnSalvarConfig = new Button();
+            btnSelecionarPastaExcel = new Button();
+            btnSelecionarPastaLogs = new Button();
             SuspendLayout();
             // 
             // lblTema
@@ -237,12 +240,34 @@ namespace ConfiguraIdaVolta
             btnSalvarConfig.UseVisualStyleBackColor = false;
             btnSalvarConfig.Click += btnSalvarConfig_Click;
             // 
+            // btnSelecionarPastaExcel
+            // 
+            btnSelecionarPastaExcel.Location = new Point(557, 305);
+            btnSelecionarPastaExcel.Name = "btnSelecionarPastaExcel";
+            btnSelecionarPastaExcel.Size = new Size(95, 23);
+            btnSelecionarPastaExcel.TabIndex = 23;
+            btnSelecionarPastaExcel.Text = "Pesquisar";
+            btnSelecionarPastaExcel.UseVisualStyleBackColor = true;
+            btnSelecionarPastaExcel.Click += btnSelecionarPastaExcel_Click;
+            // 
+            // btnSelecionarPastaLogs
+            // 
+            btnSelecionarPastaLogs.Location = new Point(557, 333);
+            btnSelecionarPastaLogs.Name = "btnSelecionarPastaLogs";
+            btnSelecionarPastaLogs.Size = new Size(95, 23);
+            btnSelecionarPastaLogs.TabIndex = 24;
+            btnSelecionarPastaLogs.Text = "Pesquisar";
+            btnSelecionarPastaLogs.UseVisualStyleBackColor = true;
+            btnSelecionarPastaLogs.Click += btnSelecionarPastaLogs_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnSelecionarPastaLogs);
+            Controls.Add(btnSelecionarPastaExcel);
             Controls.Add(btnSalvarConfig);
             Controls.Add(cmbBoxSomenteRogerFelipe);
             Controls.Add(cmbBoxSomenteFelipe);
@@ -264,7 +289,7 @@ namespace ConfiguraIdaVolta
             Controls.Add(lblSomenteKamile);
             Controls.Add(lblSomenteGui);
             Controls.Add(lblTema);
-            this.Icon = new Icon("F:\\Documentos\\Vs Projetos\\Idavolta\\ConfiguraIdaVolta\\Icone-Config-IdaVolta.ico");
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Configurações Ida e Volta";
             Load += Form1_Load;
@@ -295,5 +320,7 @@ namespace ConfiguraIdaVolta
         private ComboBox cmbBoxSomenteFelipe;
         private ComboBox cmbBoxSomenteRogerFelipe;
         private Button btnSalvarConfig;
+        private Button btnSelecionarPastaExcel;
+        private Button btnSelecionarPastaLogs;
     }
 }

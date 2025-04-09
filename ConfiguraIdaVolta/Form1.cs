@@ -159,5 +159,33 @@ namespace ConfiguraIdaVolta
         {
             AtualizarCombosExclusivos(cmbBoxSomenteRogerFelipe);
         }
+
+        private void btnSelecionarPastaExcel_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                dialog.Description = "Selecione o diretório do arquivo Excel";
+                dialog.ShowNewFolderButton = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtBoxDirArqExcel.Text = dialog.SelectedPath;
+                }
+            }
+        }
+
+        private void btnSelecionarPastaLogs_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                dialog.Description = "Selecione o diretório do arquivo de Logs";
+                dialog.ShowNewFolderButton = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtBoxDirArqLogs.Text = dialog.SelectedPath;
+                }
+            }
+        }
     }
 }
