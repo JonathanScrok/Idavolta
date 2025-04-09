@@ -13,7 +13,6 @@ namespace Idavolta
         {
             try
             {
-
                 #region CARREGA AS CHAVES DO APPSETTINGS
                 IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)

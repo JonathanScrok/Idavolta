@@ -275,7 +275,8 @@ namespace Idavolta
                     lblAviso.Text = "Sucesso!";
                     lblAviso.ForeColor = Color.Green;
                 }
-                else {
+                else
+                {
                     lblAviso.Text = "Erro!";
                     lblAviso.ForeColor = Color.Red;
                 }
@@ -427,6 +428,18 @@ namespace Idavolta
         {
             string caminho = Util.CaminhoArquivoLog;
             Process.Start("explorer.exe", caminho);
+        }
+
+        private void btnRecarregar_Click(object sender, EventArgs e)
+        {
+            txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
+
+            var valores = Util.LerOuCriarExcel();
+            txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
+            lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
+            lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
+            lblValorTotalRoger.Text = valores.valoresRoger.ToString("F2");
+            lblValorTotalFelipe.Text = valores.valoresFelipe.ToString("F2");
         }
     }
 }

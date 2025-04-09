@@ -71,6 +71,7 @@
             lblTxtValorTotalFelipe = new Label();
             lblValorTotalFelipe = new LinkLabel();
             btnLogs = new Button();
+            btnRecarregar = new Button();
             groupBoxGuilherme.SuspendLayout();
             groupBoxKamile.SuspendLayout();
             groupBoxRoger.SuspendLayout();
@@ -559,11 +560,24 @@
             btnLogs.UseVisualStyleBackColor = false;
             btnLogs.Click += btnLogs_Click;
             // 
+            // btnRecarregar
+            // 
+            btnRecarregar.Image = Image.FromFile(@"F:\Documentos\Vs Projetos\Idavolta\Idavolta\btnrecarregar.png");
+            this.btnRecarregar.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            btnRecarregar.Location = new Point(923, 462);
+            btnRecarregar.Name = "btnRecarregar";
+            btnRecarregar.Size = new Size(36, 34);
+            btnRecarregar.TabIndex = 29;
+            btnRecarregar.TextAlign = ContentAlignment.MiddleRight;
+            btnRecarregar.UseVisualStyleBackColor = true;
+            btnRecarregar.Click += btnRecarregar_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(971, 508);
+            Controls.Add(btnRecarregar);
             Controls.Add(btnLogs);
             Controls.Add(lblTxtValorTotalFelipe);
             Controls.Add(lblValorTotalFelipe);
@@ -649,6 +663,7 @@
         private Label lblTxtValorTotalFelipe;
         private LinkLabel lblValorTotalFelipe;
         private Button btnLogs;
+        private Button btnRecarregar;
 
         public Label LblValorPassagem { get => lblValorPassagem; set => lblValorPassagem = value; }
         //public Label LblValorPassagem
