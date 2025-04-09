@@ -103,6 +103,9 @@ namespace ConfiguraIdaVolta
                 if (configuracoes == null)
                     configuracoes = new Config();
 
+                if (txtBoxValorPadraoPassagem.Text.Contains("."))
+                    txtBoxValorPadraoPassagem.Text = txtBoxValorPadraoPassagem.Text.Replace(".", ",");
+
                 var app = new AppSettings
                 {
                     Tema = txtBoxTema.Text,
