@@ -51,7 +51,8 @@ namespace Idavolta
             try
             {
                 // Configurar o contexto de licença
-                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                
+                ExcelPackage.License.SetNonCommercialPersonal("Ida Volta");
 
                 double sumGuilherme = 0;
                 double sumKamile = 0;
@@ -224,7 +225,7 @@ namespace Idavolta
                 }
 
                 // Configurar o contexto de licença
-                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                ExcelPackage.License.SetNonCommercialPersonal("Ida Volta");
 
                 if (File.Exists(DiretorioArquivoExcel + NomeArquivoExcel) && Opcao == '1')
                 {
@@ -408,7 +409,7 @@ namespace Idavolta
                 GravarLog("Alterando Valor da Passagem Arquivo Excel");
 
                 // Configurar o contexto de licença
-                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                ExcelPackage.License.SetNonCommercialPersonal("Ida Volta");
 
                 if (File.Exists(DiretorioArquivoExcel + NomeArquivoExcel))
                 {
