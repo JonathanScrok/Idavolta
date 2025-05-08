@@ -562,7 +562,7 @@
             // 
             // btnRecarregar
             // 
-            btnRecarregar.Image = Image.FromFile(@"F:\Documentos\Vs Projetos\Idavolta\Idavolta\btnrecarregar.png");
+            btnRecarregar.Image = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "\\Imagem\\btnrecarregar.png"));
             this.btnRecarregar.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             btnRecarregar.Location = new Point(923, 462);
             btnRecarregar.Name = "btnRecarregar";
