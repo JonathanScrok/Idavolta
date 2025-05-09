@@ -159,29 +159,6 @@ namespace Idavolta
             MessageBox.Show("Dados salvos com sucesso!");
         }
 
-        private void lblValorTotalGui_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            string caminho = Util.DiretorioArquivoExcel;
-            Process.Start("explorer.exe", caminho);
-        }
-
-        private void lblValorTotalKamile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            string caminho = Util.DiretorioArquivoExcel;
-            Process.Start("explorer.exe", caminho);
-        }
-        private void lblValorTotalRoger_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            string caminho = Util.DiretorioArquivoExcel;
-            Process.Start("explorer.exe", caminho);
-        }
-
-        private void lblValorTotalFelipe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            string caminho = Util.DiretorioArquivoExcel;
-            Process.Start("explorer.exe", caminho);
-        }
-
         private void btnAnterior_Click(object sender, EventArgs e)
         {
             txtboxDatadeHoje.Text = Util.DiaAnterior(Convert.ToDateTime(txtboxDatadeHoje.Text)).ToString("dd/MM/yyyy");
@@ -345,8 +322,22 @@ namespace Idavolta
 
         private void CriarBlocosCaronasDinamicamente(List<string> nomesCaronas)
         {
+            // 1. Salvar os valores atuais dos totais
+            Dictionary<string, string> totaisAnteriores = new Dictionary<string, string>();
+            foreach (Control control in panelCaronas.Controls)
+            {
+                if (control is GroupBox groupBox)
+                {
+                    string nome = groupBox.Name.Replace("groupBox", "");
+                    var lblValor = groupBox.Controls.Find($"lblValorTotal{nome}", true).FirstOrDefault() as LinkLabel;
+                    if (lblValor != null)
+                        totaisAnteriores[nome] = lblValor.Text;
+                }
+            }
+
+            // 2. Limpar controles e dicionário
             panelCaronas.Controls.Clear();
-            blocosCaronas.Clear(); // <- limpa o dicionário antes de recriar
+            blocosCaronas.Clear();
 
             int espacamentoHorizontal = 40;
             int groupBoxWidth = 200;
@@ -376,7 +367,6 @@ namespace Idavolta
                 };
                 groupBox.Controls.Add(lblNome);
 
-                // Criar os RadioButtons e armazenar os objetos
                 RadioButton radioIda = CriarRadioButton("Ida", 35, nome);
                 RadioButton radioVolta = CriarRadioButton("Volta", 65, nome);
                 RadioButton radioIdaVolta = CriarRadioButton("Ida e Volta", 95, nome);
@@ -387,7 +377,6 @@ namespace Idavolta
                 groupBox.Controls.Add(radioIdaVolta);
                 groupBox.Controls.Add(radioNenhum);
 
-                // Adiciona no dicionário
                 blocosCaronas[nome] = new BlocoCarona(radioIda, radioVolta, radioIdaVolta, lblNome);
 
                 Label lblTxt = new Label
@@ -402,7 +391,7 @@ namespace Idavolta
 
                 LinkLabel lblValor = new LinkLabel
                 {
-                    Text = "0,00",
+                    Text = totaisAnteriores.ContainsKey(nome) ? totaisAnteriores[nome] : "0,00",
                     Font = new Font("Segoe UI", 14F, FontStyle.Underline),
                     MinimumSize = new Size(70, 30),
                     Name = $"lblValorTotal{nome}",
@@ -410,7 +399,6 @@ namespace Idavolta
                 };
                 groupBox.Controls.Add(lblValor);
 
-                // (opcional) adicionar ação ao clicar no valor
                 lblValor.LinkClicked += (s, e) =>
                 {
                     string caminho = Util.DiretorioArquivoExcel;
