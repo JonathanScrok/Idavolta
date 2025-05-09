@@ -46,356 +46,135 @@ namespace Idavolta
         #region MÉTODOS
 
         #region LER OU CRIAR O EXECEL
-        public static (double valoresGuilherme, double valoresKamile, double valoresRoger, double valoresFelipe, double valorPassagem) LerOuCriarExcel()
+        public static (Dictionary<string, double> valoresPorPessoa, double valorPassagem) LerOuCriarExcelDinamico(List<string> nomes)
         {
             try
             {
-                // Configurar o contexto de licença
-                
                 ExcelPackage.License.SetNonCommercialPersonal("Ida Volta");
 
-                double sumGuilherme = 0;
-                double sumKamile = 0;
-                double sumRoger = 0;
-                double sumFelipe = 0;
+                Dictionary<string, double> valores = nomes.ToDictionary(nome => nome, nome => 0.0);
                 double valorPassagem = 0;
 
-                int mes = DateTime.Now.Month;
-                string mesFormatado = mes < 10 ? "0" + mes : mes.ToString();
-
-                if (File.Exists(DiretorioArquivoExcel + NomeArquivoExcel))
+                string caminhoCompleto = Path.Combine(DiretorioArquivoExcel, NomeArquivoExcel);
+                if (File.Exists(caminhoCompleto))
                 {
-                    // Se o arquivo existir
-                    using (ExcelPackage package = new ExcelPackage(new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel)))
+                    using (var package = new ExcelPackage(new FileInfo(caminhoCompleto)))
                     {
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets["Planilha1"];
+                        var worksheet = package.Workbook.Worksheets["Planilha1"];
+                        int row = 2;
 
-                        // Calcular os valores para Guilherme e Kamile
-                        int row = 2; // Inicia na segunda linha pois a primeira é o cabeçalho
-                        while (worksheet.Cells[row, 2].Value != null || worksheet.Cells[row, 3].Value != null)
+                        while (worksheet.Cells[row, 1].Value != null)
                         {
-                            if (double.TryParse(worksheet.Cells[row, 2].Value?.ToString(), out double valorGuilherme))
+                            for (int i = 0; i < nomes.Count; i++)
                             {
-                                sumGuilherme += valorGuilherme;
+                                object cellVal = worksheet.Cells[row, i + 2].Value;
+                                if (cellVal != null && double.TryParse(cellVal.ToString(), out double valor))
+                                {
+                                    valores[nomes[i]] += valor;
+                                }
                             }
-
-                            if (double.TryParse(worksheet.Cells[row, 3].Value?.ToString(), out double valorKamile))
-                            {
-                                sumKamile += valorKamile;
-                            }
-
-                            if (double.TryParse(worksheet.Cells[row, 4].Value?.ToString(), out double valorRoger))
-                            {
-                                sumRoger += valorRoger;
-                            }
-
-                            if (double.TryParse(worksheet.Cells[row, 5].Value?.ToString(), out double valorFelipe))
-                            {
-                                sumFelipe += valorFelipe;
-                            }
-
                             row++;
                         }
 
-                        // Ler o valor da passagem
-                        var valorPassagemCell = worksheet.Cells["H1"].Value;
-                        if (valorPassagemCell != null && double.TryParse(valorPassagemCell.ToString(), out double valor))
+                        // Busca a última coluna preenchida na linha 1
+                        int ultimaColuna = worksheet.Dimension.End.Column;
+                        var valorPassagemCell = worksheet.Cells[1, ultimaColuna].Value;
+
+                        if (valorPassagemCell != null && double.TryParse(valorPassagemCell.ToString(), out double v))
                         {
-                            valorPassagem = valor;
+                            valorPassagem = v;
                         }
 
-                        return (sumGuilherme, sumKamile, sumRoger, sumFelipe, valorPassagem);
+
+                        return (valores, valorPassagem);
                     }
                 }
                 else
                 {
-                    // Se o arquivo não existir, cria um novo arquivo com o cabeçalho e valor padrão
-                    using (ExcelPackage package = new ExcelPackage())
+                    using (var package = new ExcelPackage())
                     {
-                        GravarLog("Criando o novo arquivo Excel!");
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Planilha1");
+                        GravarLog("Criando novo Excel com nomes dinâmicos");
 
-                        worksheet.Cells["A1"].Value = "Data";
-                        worksheet.Cells["B1"].Value = "Guilherme";
-                        worksheet.Cells["C1"].Value = "Kamile";
-                        worksheet.Cells["D1"].Value = "Roger";
-                        worksheet.Cells["E1"].Value = "Felipe";
-                        worksheet.Cells["F1"].Value = "Resumo das Caronas";
-                        worksheet.Cells["G1"].Value = "Valor da Passagem:";
-                        worksheet.Cells["H1"].Value = ValorPassagemPadrao;
+                        var worksheet = package.Workbook.Worksheets.Add("Planilha1");
 
-                        #region PERSONALIZAÇÃO COLUNAS EXCEL 
-                        // Definir largura das colunas
-                        worksheet.Column(1).Width = 11; // A - Data
-                        worksheet.Column(2).Width = 11; // B - Guilherme
-                        worksheet.Column(3).Width = 10; // C - Kamile
-                        worksheet.Column(4).Width = 9; // D - Roger
-                        worksheet.Column(5).Width = 9; // E - Felipe
-                        worksheet.Column(6).Width = 20; // F - Resumo das Caronas
-                        worksheet.Column(7).Width = 18; // G - Valor da Passagem
-                        worksheet.Column(8).Width = 5; // H - Valor da passagem armazenado
-
-                        // Aplicar estilo ao cabeçalho
-                        worksheet.Cells["A1:H1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        worksheet.Cells["A1:H1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                        worksheet.Cells["A1:H1"].Style.Font.Bold = true;
-                        worksheet.Cells["A1:H1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        worksheet.Cells["A1:H1"].Style.Fill.BackgroundColor.SetColor(Color.LimeGreen);
-
-                        // Aplicar bordas a todas as células usadas (por enquanto só o cabeçalho)
-                        using (ExcelRange range = worksheet.Cells["A1:H1"])
+                        worksheet.Cells[1, 1].Value = "Data";
+                        for (int i = 0; i < nomes.Count; i++)
                         {
-                            range.Style.Border.Top.Style = ExcelBorderStyle.Thick;
-                            range.Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
-                            range.Style.Border.Left.Style = ExcelBorderStyle.Thick;
-                            range.Style.Border.Right.Style = ExcelBorderStyle.Thick;
-
-                            range.Style.Border.Top.Color.SetColor(Color.Black);
-                            range.Style.Border.Bottom.Color.SetColor(Color.Black);
-                            range.Style.Border.Left.Color.SetColor(Color.Black);
-                            range.Style.Border.Right.Color.SetColor(Color.Black);
+                            worksheet.Cells[1, i + 2].Value = nomes[i];
                         }
-                        #endregion
+                        worksheet.Cells[1, nomes.Count + 2].Value = "Resumo das Caronas";
+                        worksheet.Cells[1, nomes.Count + 3].Value = "Valor da Passagem:";
+                        worksheet.Cells[1, nomes.Count + 4].Value = ValorPassagemPadrao;
 
-                        var fi = new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel);
+                        var fi = new FileInfo(caminhoCompleto);
                         package.SaveAs(fi);
-                        GravarLog("Fim da criação do novo arquivo Excel!");
 
-                        return (0.0, 0.0, 0.0, 0.0, ValorPassagemPadrao);
+                        return (valores, ValorPassagemPadrao);
                     }
                 }
             }
             catch (Exception ex)
             {
-                GravarLog("Erro no LerOuCriarExcel(): " + ex.Message);
+                GravarLog("Erro em LerOuCriarExcelDinamico(): " + ex.Message);
                 throw;
             }
         }
         #endregion
 
         #region ALTERA O ARQUIVO EXCEL
-        public static bool AlterarExcelDados(double valorPassagem, TipoCaronaGui TipodaCaronaGui, TipoCaronaKamile TipodaCaronaKamile, TipoCaronaRoger TipodaCaronaRoger, TipoCaronaFelipe TipodaCaronaFelipe, string DataCarona, double valorTotalAnteriorGui, double valorTotalAnteriorKamile, double valorTotalAnteriorRoger, double valorTotalAnteriorFelipe, out double valorKamile, out double valorGui, out double valorRoger, out double valorFelipe, char Opcao = '1')
+        public static void AlterarExcelDadosDinamico(Dictionary<string, TipoCarona> caronasSelecionadas, double valorPassagem, List<string> nomesCaronas, string DataCarona)
         {
             try
             {
-                valorGui = valorPassagem;
-                if (TipodaCaronaGui == TipoCaronaGui.IdaVoltaGui)
-                    valorGui += valorPassagem;
-                else if (TipodaCaronaGui == TipoCaronaGui.SemCaronaGui)
-                    valorGui = 0;
-
-                valorKamile = valorPassagem;
-                if (TipodaCaronaKamile == TipoCaronaKamile.IdaVoltaKamile)
-                    valorKamile += valorPassagem;
-                else if (TipodaCaronaKamile == TipoCaronaKamile.SemCaronaKamile)
-                    valorKamile = 0;
-
-                valorRoger = valorPassagem;
-                if (TipodaCaronaRoger == TipoCaronaRoger.IdaVoltaRoger)
-                    valorRoger += valorPassagem;
-                else if (TipodaCaronaRoger == TipoCaronaRoger.SemCaronaRoger)
-                    valorRoger = 0;
-
-                valorFelipe = valorPassagem;
-                if (TipodaCaronaFelipe == TipoCaronaFelipe.IdaVoltaFelipe)
-                    valorFelipe += valorPassagem;
-                else if (TipodaCaronaFelipe == TipoCaronaFelipe.SemCaronaFelipe)
-                    valorFelipe = 0;
-
-                string resumoCaronas = string.Empty;
-                if (TipodaCaronaGui != TipoCaronaGui.SemCaronaGui)
-                {
-                    resumoCaronas = "G:" + GetEnumDescription(TipodaCaronaGui);
-                }
-                if (TipodaCaronaKamile != TipoCaronaKamile.SemCaronaKamile)
-                {
-                    resumoCaronas = "K:" + GetEnumDescription(TipodaCaronaKamile);
-                }
-                if (TipodaCaronaRoger != TipoCaronaRoger.SemCaronaRoger)
-                {
-                    resumoCaronas = "R:" + GetEnumDescription(TipodaCaronaRoger);
-                }
-                if (TipodaCaronaFelipe != TipoCaronaFelipe.SemCaronaFelipe)
-                {
-                    if (string.IsNullOrEmpty(resumoCaronas))
-                        resumoCaronas = "F:" + GetEnumDescription(TipodaCaronaFelipe);
-                    else
-                        resumoCaronas = resumoCaronas + " F:" +
-                            GetEnumDescription(TipodaCaronaFelipe);
-                }
-
                 // Configurar o contexto de licença
                 ExcelPackage.License.SetNonCommercialPersonal("Ida Volta");
 
-                if (File.Exists(DiretorioArquivoExcel + NomeArquivoExcel) && Opcao == '1')
+                string caminhoCompleto = Path.Combine(DiretorioArquivoExcel, NomeArquivoExcel);
+                var fileInfo = new FileInfo(caminhoCompleto);
+
+                using (var package = new ExcelPackage(fileInfo))
                 {
-                    try
-                    {
-                        GravarLog("Alterando o arquivo Excel");
+                    var worksheet = package.Workbook.Worksheets["Planilha1"];
 
-                        // Se existir, abre o arquivo Excel existente e adiciona dados
-                        using (ExcelPackage package = new ExcelPackage(new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel)))
+                    // Descobrir a próxima linha vazia
+                    int novaLinha = worksheet.Dimension?.End.Row + 1 ?? 2;
+
+                    // Inserir data
+                    worksheet.Cells[novaLinha, 1].Value = DataCarona; //DATAESCOLHIDA
+
+                    // Preencher valores para cada nome dinamicamente
+                    for (int i = 0; i < nomesCaronas.Count; i++)
+                    {
+                        string nome = nomesCaronas[i];
+                        TipoCarona tipo = caronasSelecionadas.ContainsKey(nome) ? caronasSelecionadas[nome] : TipoCarona.Nenhum;
+
+                        double valor = tipo switch
                         {
-                            ExcelWorksheet worksheet = package.Workbook.Worksheets["Planilha1"];
-                            int linhaInicial = worksheet.Dimension.End.Row + 1;
+                            TipoCarona.Ida => valorPassagem,
+                            TipoCarona.Volta => valorPassagem,
+                            TipoCarona.IdaVolta => valorPassagem * 2,
+                            _ => 0
+                        };
 
-                            worksheet.Cells[linhaInicial, 1].Value = DataCarona;
-                            if (TipodaCaronaGui == TipoCaronaGui.SemCaronaGui)
-                                worksheet.Cells[linhaInicial, 2].Value = "";
-                            else
-                                worksheet.Cells[linhaInicial, 2].Value = valorGui;
-
-                            if (TipodaCaronaKamile == TipoCaronaKamile.SemCaronaKamile)
-                                worksheet.Cells[linhaInicial, 3].Value = "";
-                            else
-                                worksheet.Cells[linhaInicial, 3].Value = valorKamile;
-
-                            if (TipodaCaronaRoger == TipoCaronaRoger.SemCaronaRoger)
-                                worksheet.Cells[linhaInicial, 4].Value = "";
-                            else
-                                worksheet.Cells[linhaInicial, 4].Value = valorRoger;
-
-                            if (TipodaCaronaFelipe == TipoCaronaFelipe.SemCaronaFelipe)
-                                worksheet.Cells[linhaInicial, 5].Value = "";
-                            else
-                                worksheet.Cells[linhaInicial, 5].Value = valorFelipe;
-
-                            worksheet.Cells[linhaInicial, 6].Value = resumoCaronas;
-
-                            if (valorTotalAnteriorFelipe > 0 || valorFelipe > 0)
-                            {
-                                worksheet.Cells[1, 10].Value = "VALOR TOTAL FELIPE: " + (valorTotalAnteriorFelipe + valorFelipe).ToString("F2");
-                                worksheet.Column(10).Width = 26;
-                                worksheet.Cells["J1"].Style.Font.Bold = true;
-                                worksheet.Cells["J1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                                worksheet.Cells["J1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
-                            }
-
-                            if (valorTotalAnteriorRoger > 0 || valorRoger > 0)
-                            {
-                                worksheet.Cells[1, 11].Value = "VALOR TOTAL ROGER: " + (valorTotalAnteriorRoger + valorRoger).ToString("F2");
-                                worksheet.Column(11).Width = 26;
-                                worksheet.Cells["K1"].Style.Font.Bold = true;
-                                worksheet.Cells["K1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                                worksheet.Cells["K1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
-                            }
-
-                            if (valorTotalAnteriorGui > 0 || valorGui > 0)
-                                worksheet.Cells[1, 12].Value = "VALOR TOTAL GUI: " + (valorTotalAnteriorGui + valorGui).ToString("F2");
-
-                            if (valorTotalAnteriorKamile > 0 || valorKamile > 0)
-                                worksheet.Cells[1, 13].Value = "VALOR TOTAL KAMILE: " + (valorTotalAnteriorKamile + valorKamile).ToString("F2");
-
-                            package.Save();
-                            GravarLog("Finalizado! Dados adicionados ao arquivo Excel existente!");
-                        }
+                        worksheet.Cells[novaLinha, i + 2].Value = valor;
                     }
-                    catch (InvalidOperationException ex)
-                    {
-                        MessageBox.Show("Feche a janela do arquivo Excel!", "Arquivo em uso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        GravarLog("Erro: Arquivo em uso. Não foi possível salvar.");
-                        return false;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Erro inesperado: " + ex.Message);
-                        GravarLog("Erro inesperado: " + ex.ToString());
-                        return false;
-                    }
+
+                    // Coluna de resumo
+                    string resumo = string.Join(" | ", caronasSelecionadas
+                        .Where(p => p.Value != TipoCarona.Nenhum)
+                        .Select(p => $"{p.Key}: {p.Value}"));
+
+                    worksheet.Cells[novaLinha, nomesCaronas.Count + 2].Value = resumo;
+
+                    // Atualizar o valor da passagem
+                    worksheet.Cells[1, nomesCaronas.Count + 4].Value = valorPassagem;
+
+                    package.Save();
                 }
-                else
-                {
-                    // Se não existir, cria um novo arquivo Excel e adiciona dados
-                    using (ExcelPackage package = new ExcelPackage())
-                    {
-                        GravarLog("Criando o arquivo Excel");
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Planilha1");
-
-                        worksheet.Cells["A1"].Value = "Data";
-                        worksheet.Cells["B1"].Value = "Guilherme";
-                        worksheet.Cells["C1"].Value = "Kamile";
-                        worksheet.Cells["D1"].Value = "Roger";
-                        worksheet.Cells["E1"].Value = "Felipe";
-                        worksheet.Cells["F1"].Value = "Resumo das Caronas";
-                        worksheet.Cells["G1"].Value = "Valor da Passagem:";
-                        worksheet.Cells["H1"].Value = ValorPassagemPadrao;
-
-                        worksheet.Cells[2, 1].Value = DataCarona;
-                        worksheet.Cells[2, 2].Value = valorGui;
-                        worksheet.Cells[2, 3].Value = valorKamile;
-                        worksheet.Cells[2, 4].Value = valorRoger;
-                        worksheet.Cells[2, 5].Value = valorFelipe;
-                        worksheet.Cells[2, 6].Value = resumoCaronas;
-
-                        if (valorTotalAnteriorFelipe > 0 || valorFelipe > 0)
-                        {
-                            worksheet.Cells[1, 10].Value = "VALOR TOTAL FELIPE: " + (valorTotalAnteriorFelipe + valorFelipe).ToString("F2");
-                            worksheet.Column(10).Width = 26;
-                            worksheet.Cells["J1"].Style.Font.Bold = true;
-                            worksheet.Cells["J1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells["J1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
-                        }
-
-                        if (valorTotalAnteriorRoger > 0 || valorRoger > 0)
-                        {
-                            worksheet.Cells[1, 11].Value = "VALOR TOTAL ROGER: " + (valorTotalAnteriorRoger + valorRoger).ToString("F2");
-                            worksheet.Column(11).Width = 26;
-                            worksheet.Cells["K1"].Style.Font.Bold = true;
-                            worksheet.Cells["K1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells["K1"].Style.Fill.BackgroundColor.SetColor(Color.Orange);
-                        }
-
-                        if (valorTotalAnteriorGui > 0 || valorGui > 0)
-                            worksheet.Cells[1, 12].Value = "VALOR TOTAL GUI: " + (valorTotalAnteriorGui + valorGui).ToString("F2");
-
-                        if (valorTotalAnteriorKamile > 0 || valorKamile > 0)
-                            worksheet.Cells[1, 13].Value = "VALOR TOTAL KAMILE: " + (valorTotalAnteriorKamile + valorKamile).ToString("F2");
-
-                        #region PERSONALIZAÇÃO COLUNAS EXCEL 
-                        // Definir largura das colunas
-                        worksheet.Column(1).Width = 11; // A - Data
-                        worksheet.Column(2).Width = 10; // B - Guilherme
-                        worksheet.Column(3).Width = 10; // C - Kamile
-                        worksheet.Column(4).Width = 9; // D - Roger
-                        worksheet.Column(5).Width = 9; // E - Felipe
-                        worksheet.Column(6).Width = 19; // F - Resumo das Caronas
-                        worksheet.Column(7).Width = 18; // G - Valor da Passagem
-                        worksheet.Column(8).Width = 5; // H - Valor da passagem armazenado
-
-                        // Aplicar estilo ao cabeçalho
-                        worksheet.Cells["A1:H1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        worksheet.Cells["A1:H1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                        worksheet.Cells["A1:H1"].Style.Font.Bold = true;
-                        worksheet.Cells["A1:H1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        worksheet.Cells["A1:H1"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-
-                        // Aplicar bordas a todas as células usadas (por enquanto só o cabeçalho)
-                        using (ExcelRange range = worksheet.Cells["A1:H1"])
-                        {
-                            range.Style.Border.Top.Style = ExcelBorderStyle.Thick;
-                            range.Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
-                            range.Style.Border.Left.Style = ExcelBorderStyle.Thick;
-                            range.Style.Border.Right.Style = ExcelBorderStyle.Thick;
-
-                            range.Style.Border.Top.Color.SetColor(Color.Black);
-                            range.Style.Border.Bottom.Color.SetColor(Color.Black);
-                            range.Style.Border.Left.Color.SetColor(Color.Black);
-                            range.Style.Border.Right.Color.SetColor(Color.Black);
-                        }
-                        #endregion
-
-                        var fi = new FileInfo(DiretorioArquivoExcel + NomeArquivoExcel);
-                        package.SaveAs(fi);
-
-                        GravarLog("Finalizado! Dados já no novo arquivo Excel!");
-                    }
-                }
-
-                return true;
             }
             catch (Exception ex)
             {
-                GravarLog("Erro no AlterarExcelDados(): " + ex.Message);
+                GravarLog("Erro ao alterar Excel dinamicamente: " + ex.Message);
                 throw;
             }
         }

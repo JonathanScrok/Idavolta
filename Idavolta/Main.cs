@@ -5,125 +5,39 @@ namespace Idavolta
     public partial class Main : Form
     {
         string TemaEscolhido { get; set; }
+        List<string> ? nomesCaronas { get; set; }
+
+        private Dictionary<string, BlocoCarona> blocosCaronas;
+
+        private Panel panelCaronas;
 
         public Main(string temaEscolhido)
         {
             TemaEscolhido = temaEscolhido;
             InitializeComponent();
 
+            nomesCaronas = ConfigHelper.ObterListaCaronas();
+
+            InicializarPanelCaronas();
+            InicializarBlocosCaronas();
             PersonalizarEstilo();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            blocosCaronas = new Dictionary<string, BlocoCarona>();
             this.ActiveControl = btnLogs;
 
             try
             {
                 txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                var (valoresPorPessoa, valorPassagem) = Util.LerOuCriarExcelDinamico(nomesCaronas);
 
-                var valores = Util.LerOuCriarExcel();
+                CriarBlocosCaronasDinamicamente(nomesCaronas);
+                AtualizarTotais(valoresPorPessoa);
 
-                if (Util.SomemteGui)
-                {
-                    groupBoxGuilherme.Location = new Point(307, 133);
-                    lblValorTotalGui.Location = new Point(344, 362);
-                    lblTxtValorTotalGui.Location = new Point(344, 334);
-
-                    groupBoxKamile.Visible = false;
-                    lblTxtValorTotalKamile.Visible = false;
-                    lblValorTotalKamile.Visible = false;
-
-                    groupBoxFelipe.Visible = false;
-                    lblTxtValorTotalFelipe.Visible = false;
-                    lblValorTotalFelipe.Visible = false;
-
-                    groupBoxRoger.Visible = false;
-                    lblTxtValorTotalRoger.Visible = false;
-                    lblValorTotalRoger.Visible = false;
-                }
-                else if (Util.SomenteKamile)
-                {
-                    groupBoxKamile.Location = new Point(307, 133);
-                    lblValorTotalKamile.Location = new Point(344, 362);
-                    lblTxtValorTotalKamile.Location = new Point(344, 334);
-
-                    groupBoxGuilherme.Visible = false;
-                    lblTxtValorTotalGui.Visible = false;
-                    lblValorTotalGui.Visible = false;
-
-                    groupBoxFelipe.Visible = false;
-                    lblTxtValorTotalFelipe.Visible = false;
-                    lblValorTotalFelipe.Visible = false;
-
-                    groupBoxRoger.Visible = false;
-                    lblTxtValorTotalRoger.Visible = false;
-                    lblValorTotalRoger.Visible = false;
-                }
-                else if (Util.SomenteRoger)
-                {
-                    groupBoxRoger.Location = new Point(307, 133);
-                    lblValorTotalRoger.Location = new Point(344, 362);
-                    lblTxtValorTotalRoger.Location = new Point(344, 334);
-
-                    groupBoxGuilherme.Visible = false;
-                    lblTxtValorTotalGui.Visible = false;
-                    lblValorTotalGui.Visible = false;
-
-                    groupBoxKamile.Visible = false;
-                    lblTxtValorTotalKamile.Visible = false;
-                    lblValorTotalKamile.Visible = false;
-
-                    groupBoxFelipe.Visible = false;
-                    lblTxtValorTotalFelipe.Visible = false;
-                    lblValorTotalFelipe.Visible = false;
-                }
-                else if (Util.SomenteFelipe)
-                {
-                    groupBoxFelipe.Location = new Point(322, 133);
-                    lblValorTotalFelipe.Location = new Point(344, 362);
-                    lblTxtValorTotalFelipe.Location = new Point(344, 334);
-
-                    groupBoxGuilherme.Visible = false;
-                    lblTxtValorTotalGui.Visible = false;
-                    lblValorTotalGui.Visible = false;
-
-                    groupBoxKamile.Visible = false;
-                    lblTxtValorTotalKamile.Visible = false;
-                    lblValorTotalKamile.Visible = false;
-
-                    groupBoxRoger.Visible = false;
-                    lblTxtValorTotalRoger.Visible = false;
-                    lblValorTotalRoger.Visible = false;
-                }
-
-                else if (Util.SomenteRogerFelipe)
-                {
-                    groupBoxRoger.Location = new Point(218, 133);
-                    groupBoxFelipe.Location = new Point(424, 133);
-
-                    lblValorTotalRoger.Location = new Point(218, 362);
-                    lblTxtValorTotalRoger.Location = new Point(218, 334);
-
-                    lblValorTotalFelipe.Location = new Point(424, 362);
-                    lblTxtValorTotalFelipe.Location = new Point(424, 334);
-
-                    groupBoxGuilherme.Visible = false;
-                    lblTxtValorTotalGui.Visible = false;
-                    lblValorTotalGui.Visible = false;
-
-                    groupBoxKamile.Visible = false;
-                    lblTxtValorTotalKamile.Visible = false;
-                    lblValorTotalKamile.Visible = false;
-                }
-
-                txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
-                lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
-                lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
-                lblValorTotalRoger.Text = valores.valoresRoger.ToString("F2");
-                lblValorTotalFelipe.Text = valores.valoresFelipe.ToString("F2");
-
-                CentralizarControles();
+                txtboxValorPassagem.Text = valorPassagem.ToString("F2");
+                //CentralizarControles();
             }
             catch (Exception ex)
             {
@@ -132,9 +46,49 @@ namespace Idavolta
             }
         }
 
+        private void AtualizarTotais(Dictionary<string, double> valores)
+        {
+            // Limpa os rótulos existentes (opcional)
+            foreach (Control control in this.Controls)
+            {
+                if (control is Label && control.Name.StartsWith("lblValorTotal"))
+                {
+                    control.Text = "0,00";
+                }
+            }
+
+            // Itera sobre o dicionário e atualiza os rótulos correspondentes
+            foreach (var valor in valores)
+            {
+                // Verifica se existe um Label com o nome adequado e atualiza o texto
+                Label label = this.Controls.Find("lblValorTotal" + valor.Key, true).FirstOrDefault() as Label;
+
+                if (label != null)
+                {
+                    label.Text = valor.Value.ToString("F2");
+                }
+                else
+                {
+                    // Caso o Label não exista, você pode criar um rótulo dinamicamente, se necessário
+                    Label novoLabel = new Label
+                    {
+                        Name = "lblValorTotal" + valor.Key,
+                        Text = valor.Value.ToString("F2"),
+                        AutoSize = true
+                    };
+
+                    // Você pode adicionar esse rótulo ao painel ou ao formulário
+                    panelCaronas.Controls.Add(novoLabel); // Adicionando ao painel, se você tiver um
+                    novoLabel.Location = new Point(10, panelCaronas.Controls.Count * 30); // Ajuste a posição
+                }
+            }
+        }
+
         private void Form1_Resize(object sender, EventArgs e)
         {
             CentralizarControles();
+            panelCaronas.Width = this.ClientSize.Width;
+            CriarBlocosCaronasDinamicamente(nomesCaronas);
         }
 
         private void btnAlterar_Click(object sender, EventArgs e)
@@ -170,128 +124,39 @@ namespace Idavolta
             }
         }
 
-        private async void btnSalvar_Click(object sender, EventArgs e)
+        private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (Util.SomenteFelipe || Util.SomenteRogerFelipe)
+            if (!double.TryParse(txtboxValorPassagem.Text, out double valorPassagem))
             {
-                if (!radiobtnIdaFelipe.Checked &&
-                    !radiobtnVoltaFelipe.Checked &&
-                    !radiobtnIdaVoltaFelipe.Checked &&
-                    !radiobtnSemCaronaFelipe.Checked)
+                MessageBox.Show("Valor da passagem inválido.");
+                return;
+            }
+
+            // Coleta as seleções de caronas
+            Dictionary<string, TipoCarona> caronasSelecionadas = new Dictionary<string, TipoCarona>();
+
+            foreach (var nome in nomesCaronas)
+            {
+                if (blocosCaronas.TryGetValue(nome, out var bloco))
                 {
-                    MessageBox.Show("Por favor, selecione uma opção para o Felipe.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    if (bloco.radioIda.Checked)
+                        caronasSelecionadas[nome] = TipoCarona.Ida;
+                    else if (bloco.radioVolta.Checked)
+                        caronasSelecionadas[nome] = TipoCarona.Volta;
+                    else if (bloco.radioIdaVolta.Checked)
+                        caronasSelecionadas[nome] = TipoCarona.IdaVolta;
+                    else
+                        caronasSelecionadas[nome] = TipoCarona.Nenhum;
                 }
             }
-            else if (Util.SomenteRoger || Util.SomenteRogerFelipe)
-            {
-                if (!radiobtnIdaRoger.Checked &&
-                    !radiobtnVoltaRoger.Checked &&
-                    !radiobtnIdaVoltaRoger.Checked &&
-                    !radiobtnSemCaronaRoger.Checked)
-                {
-                    MessageBox.Show("Por favor, selecione uma opção para o Roger.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
 
-            TipoCaronaGui guilhermeSelection = TipoCaronaGui.SemCaronaGui;
-            TipoCaronaKamile kamileSelection = TipoCaronaKamile.SemCaronaKamile;
-            TipoCaronaRoger RogerSelection = TipoCaronaRoger.SemCaronaRoger;
-            TipoCaronaFelipe FelipeSelection = TipoCaronaFelipe.SemCaronaFelipe;
+            // Chama o método para salvar os dados no Excel
+            Util.AlterarExcelDadosDinamico(caronasSelecionadas, valorPassagem, nomesCaronas, txtboxDatadeHoje.Text);
 
-            // Verificar qual RadioButton está marcado para Guilherme
-            if (radiobtnIdaGui.Checked)
-            {
-                guilhermeSelection = TipoCaronaGui.IdaGui;
-            }
-            else if (radiobtnVoltaGui.Checked)
-            {
-                guilhermeSelection = TipoCaronaGui.VoltaGui;
-            }
-            else if (radiobtnIdaVoltaGui.Checked)
-            {
-                guilhermeSelection = TipoCaronaGui.IdaVoltaGui;
-            }
+            var (valoresPorPessoa, valorPassagem2) = Util.LerOuCriarExcelDinamico(nomesCaronas);
+            AtualizarTotais(valoresPorPessoa);
 
-            // Verificar qual RadioButton está marcado para Kamile
-            if (radiobtnIdaKamile.Checked)
-            {
-                kamileSelection = TipoCaronaKamile.IdaKamile;
-            }
-            else if (radiobtnVoltaKamile.Checked)
-            {
-                kamileSelection = TipoCaronaKamile.VoltaKamile;
-            }
-            else if (radiobtnIdaVoltaKamile.Checked)
-            {
-                kamileSelection = TipoCaronaKamile.IdaVoltaKamile;
-            }
-
-            // Verificar qual RadioButton está marcado para Roger
-            if (radiobtnIdaRoger.Checked)
-            {
-                RogerSelection = TipoCaronaRoger.IdaRoger;
-            }
-            else if (radiobtnVoltaRoger.Checked)
-            {
-                RogerSelection = TipoCaronaRoger.VoltaRoger;
-            }
-            else if (radiobtnIdaVoltaRoger.Checked)
-            {
-                RogerSelection = TipoCaronaRoger.IdaVoltaRoger;
-            }
-
-            // Verificar qual RadioButton está marcado para Felipe
-            if (radiobtnIdaFelipe.Checked)
-            {
-                FelipeSelection = TipoCaronaFelipe.IdaFelipe;
-            }
-            else if (radiobtnVoltaFelipe.Checked)
-            {
-                FelipeSelection = TipoCaronaFelipe.VoltaFelipe;
-            }
-            else if (radiobtnIdaVoltaFelipe.Checked)
-            {
-                FelipeSelection = TipoCaronaFelipe.IdaVoltaFelipe;
-            }
-
-            try
-            {
-                double valorGui = 0;
-                double valorKamile = 0;
-                double valorRoger = 0;
-                double valorFelipe = 0;
-                bool result = Util.AlterarExcelDados(Convert.ToDouble(txtboxValorPassagem.Text), guilhermeSelection, kamileSelection, RogerSelection, FelipeSelection, txtboxDatadeHoje.Text, Convert.ToDouble(lblValorTotalGui.Text), Convert.ToDouble(lblValorTotalKamile.Text), Convert.ToDouble(lblValorTotalRoger.Text), Convert.ToDouble(lblValorTotalFelipe.Text), out valorKamile, out valorGui, out valorRoger, out valorFelipe);
-
-                if (result)
-                {
-                    double valorTotalGui = Convert.ToDouble(lblValorTotalGui.Text) + valorGui;
-                    double valorTotalKamile = Convert.ToDouble(lblValorTotalKamile.Text) + valorKamile;
-                    double valorTotalRoger = Convert.ToDouble(lblValorTotalRoger.Text) + valorRoger;
-                    double valorTotalFelipe = Convert.ToDouble(lblValorTotalFelipe.Text) + valorFelipe;
-                    lblValorTotalGui.Text = valorTotalGui.ToString("F2");
-                    lblValorTotalKamile.Text = valorTotalKamile.ToString("F2");
-                    lblValorTotalRoger.Text = valorTotalRoger.ToString("F2");
-                    lblValorTotalFelipe.Text = valorTotalFelipe.ToString("F2");
-
-                    lblAviso.Text = "Sucesso!";
-                    lblAviso.ForeColor = Color.Green;
-                }
-                else
-                {
-                    lblAviso.Text = "Erro!";
-                    lblAviso.ForeColor = Color.Red;
-                }
-                lblAviso.Visible = true;
-                await Task.Delay(2000); // Espera por 3 segundos
-                lblAviso.Visible = false;
-            }
-            catch (Exception ex)
-            {
-                Util.GravarLog("Erro no btnSalvar_Click: " + ex.Message);
-                throw;
-            }
+            MessageBox.Show("Dados salvos com sucesso!");
         }
 
         private void lblValorTotalGui_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -337,55 +202,66 @@ namespace Idavolta
             btnSalvar.Top = topoSalvar;
             btnSalvar.Left = (formWidth - btnSalvar.Width) / 2;
 
-            // Arrays dos GroupBoxes e Labels
-            GroupBox[] todosGrupos = { groupBoxFelipe, groupBoxGuilherme, groupBoxKamile, groupBoxRoger };
-            Label[] labelsTxt = { lblTxtValorTotalFelipe, lblTxtValorTotalGui, lblTxtValorTotalKamile, lblTxtValorTotalRoger };
-            Label[] labelsVal = { lblValorTotalFelipe, lblValorTotalGui, lblValorTotalKamile, lblValorTotalRoger };
-
-            // Filtro apenas dos grupos visíveis
-            var gruposVisiveis = todosGrupos
-                .Select((g, i) => new { Grupo = g, LabelTxt = labelsTxt[i], LabelVal = labelsVal[i] })
-                .Where(x => x.Grupo.Visible)
+            // Centralizar os blocos no panelCaronas
+            var gruposVisiveis = panelCaronas.Controls.OfType<GroupBox>()
+                .Where(g => g.Visible && g.Name.StartsWith("groupBox"))
+                .Select(g =>
+                {
+                    string nome = g.Name.Replace("groupBox", "");
+                    Label lblTxt = panelCaronas.Controls.Find("lblTxtValorTotal" + nome, true).FirstOrDefault() as Label;
+                    LinkLabel lblVal = panelCaronas.Controls.Find("lblValorTotal" + nome, true).FirstOrDefault() as LinkLabel;
+                    return new { Grupo = g, LabelTxt = lblTxt, LabelVal = lblVal };
+                })
+                .Where(x => x.LabelTxt != null && x.LabelVal != null)
                 .ToList();
 
-            if (gruposVisiveis.Count == 0) return; // se nenhum estiver visível, não faz nada
+            if (gruposVisiveis.Count == 0) return;
 
             int espacamento = 40;
-
-            // Largura total ocupada pelos grupos + espaçamentos
             int totalWidth = gruposVisiveis.Sum(x => x.Grupo.Width) + espacamento * (gruposVisiveis.Count - 1);
-
-            // Posição inicial à esquerda para centralizar
-            int leftInicial = (formWidth - totalWidth) / 2;
-            int topBase = (formHeight - gruposVisiveis[0].Grupo.Height - 30) / 2;
+            int leftInicial = (panelCaronas.Width - totalWidth) / 2;
+            int topBase = 20;
 
             int leftAtual = leftInicial;
             foreach (var item in gruposVisiveis)
             {
-                // Posicionar GroupBox
                 item.Grupo.Left = leftAtual;
                 item.Grupo.Top = topBase;
 
-                // Posicionar labels abaixo do GroupBox
                 item.LabelTxt.Top = item.Grupo.Bottom + 5;
                 item.LabelTxt.Left = item.Grupo.Left;
 
                 item.LabelVal.Top = item.LabelTxt.Top;
                 item.LabelVal.Left = item.LabelTxt.Right + 5;
 
-                // Avança para o próximo com margem
                 leftAtual += item.Grupo.Width + espacamento;
             }
 
-            // Posicionar os controles fixos à direita
-            int margemDireitaLblData = 232;
-            int margemDireitaAnterior = 264;
-            int margemDireitaProximo = 174;
+            // Posicionar lblDataHoje e txtboxDatadeHoje acima dos botões de navegação
+            int espacamentoBotoes = 6;
+            int topBotoes = 76;
 
-            lblDataHoje.Location = new Point(formWidth - margemDireitaLblData, 29);
-            txtboxDatadeHoje.Location = new Point(formWidth - margemDireitaLblData, 47);
-            btnAnterior.Location = new Point(formWidth - margemDireitaAnterior, 76);
-            btnProximo.Location = new Point(formWidth - margemDireitaProximo, 76);
+            int larguraBotoes = btnAnterior.Width + espacamentoBotoes + btnProximo.Width;
+            int leftBotoes = formWidth - larguraBotoes - 20;
+
+            btnAnterior.Location = new Point(leftBotoes, topBotoes);
+            btnProximo.Location = new Point(btnAnterior.Right + espacamentoBotoes, topBotoes);
+
+            txtboxDatadeHoje.Location = new Point(
+                btnAnterior.Left + (btnProximo.Right - btnAnterior.Left - txtboxDatadeHoje.Width) / 2,
+                btnAnterior.Top - txtboxDatadeHoje.Height - 4
+            );
+
+            lblDataHoje.Location = new Point(
+                txtboxDatadeHoje.Left,
+                txtboxDatadeHoje.Top - lblDataHoje.Height - 2
+            );
+
+            // Posicionar botão Logs no canto inferior esquerdo
+            btnLogs.Location = new Point(10, formHeight - btnLogs.Height - 10);
+
+            // Posicionar botão Recarregar no canto inferior direito
+            btnRecarregar.Location = new Point(formWidth - btnRecarregar.Width - 10, formHeight - btnRecarregar.Height - 10);
         }
 
         private void PersonalizarEstilo()
@@ -418,13 +294,11 @@ namespace Idavolta
             estilizarBotao(btnAnterior);
             estilizarBotao(btnProximo);
 
-
             // Estilo para os Links
-            lblValorTotalGui.LinkColor = Color.Chocolate;
-            lblValorTotalKamile.LinkColor = Color.Chocolate;
-            lblValorTotalRoger.LinkColor = Color.Chocolate;
-            lblValorTotalFelipe.LinkColor = Color.Chocolate;
-
+            //lblValorTotalGui.LinkColor = Color.Chocolate;
+            //lblValorTotalKamile.LinkColor = Color.Chocolate;
+            //lblValorTotalRoger.LinkColor = Color.Chocolate;
+            //lblValorTotalFelipe.LinkColor = Color.Chocolate;
         }
 
         private void btnLogs_Click(object sender, EventArgs e)
@@ -436,13 +310,197 @@ namespace Idavolta
         private void btnRecarregar_Click(object sender, EventArgs e)
         {
             txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            var (valoresPorPessoa, valorPassagem) = Util.LerOuCriarExcelDinamico(nomesCaronas);
+            AtualizarTotais(valoresPorPessoa);
+            //var valores = Util.LerOuCriarExcelDinamico();
+            //txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
+            //lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
+            //lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
+            //lblValorTotalRoger.Text = valores.valoresRoger.ToString("F2");
+            //lblValorTotalFelipe.Text = valores.valoresFelipe.ToString("F2");
+        }
 
-            var valores = Util.LerOuCriarExcel();
-            txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
-            lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
-            lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
-            lblValorTotalRoger.Text = valores.valoresRoger.ToString("F2");
-            lblValorTotalFelipe.Text = valores.valoresFelipe.ToString("F2");
+        private void AdicionarNovaCarona(string nome)
+        {
+            var caronas = ConfigHelper.ObterListaCaronas();
+
+            if (!caronas.Contains(nome))
+            {
+                caronas.Add(nome);
+                ConfigHelper.SalvarListaCaronas(caronas);
+                MessageBox.Show($"{nome} adicionado!");
+                //this.Controls.Clear();
+                //InitializeComponent();
+
+                nomesCaronas = ConfigHelper.ObterListaCaronas();
+                CriarBlocosCaronasDinamicamente(nomesCaronas);
+                CentralizarControles();
+
+            }
+            else
+            {
+                MessageBox.Show("Carona já existe.");
+            }
+        }
+
+        private void CriarBlocosCaronasDinamicamente(List<string> nomesCaronas)
+        {
+            panelCaronas.Controls.Clear();
+            blocosCaronas.Clear(); // <- limpa o dicionário antes de recriar
+
+            int espacamentoHorizontal = 40;
+            int groupBoxWidth = 200;
+            int groupBoxHeight = 230;
+
+            int totalWidth = nomesCaronas.Count * groupBoxWidth + (nomesCaronas.Count - 1) * espacamentoHorizontal;
+            int xInicial = (panelCaronas.Width - totalWidth) / 2;
+            int yInicial = 20;
+
+            for (int i = 0; i < nomesCaronas.Count; i++)
+            {
+                string nome = nomesCaronas[i];
+
+                GroupBox groupBox = new GroupBox
+                {
+                    Name = $"groupBox{nome}",
+                    Size = new Size(groupBoxWidth, groupBoxHeight),
+                    Location = new Point(xInicial + i * (groupBoxWidth + espacamentoHorizontal), yInicial)
+                };
+
+                Label lblNome = new Label
+                {
+                    Text = nome,
+                    Font = new Font("Segoe UI", 15F, FontStyle.Bold),
+                    AutoSize = true,
+                    Location = new Point((groupBox.Width - TextRenderer.MeasureText(nome, new Font("Segoe UI", 15F, FontStyle.Bold)).Width) / 2, 5)
+                };
+                groupBox.Controls.Add(lblNome);
+
+                // Criar os RadioButtons e armazenar os objetos
+                RadioButton radioIda = CriarRadioButton("Ida", 35, nome);
+                RadioButton radioVolta = CriarRadioButton("Volta", 65, nome);
+                RadioButton radioIdaVolta = CriarRadioButton("Ida e Volta", 95, nome);
+                RadioButton radioNenhum = CriarRadioButton("Sem Carona", 125, nome);
+
+                groupBox.Controls.Add(radioIda);
+                groupBox.Controls.Add(radioVolta);
+                groupBox.Controls.Add(radioIdaVolta);
+                groupBox.Controls.Add(radioNenhum);
+
+                // Adiciona no dicionário
+                blocosCaronas[nome] = new BlocoCarona(radioIda, radioVolta, radioIdaVolta, lblNome);
+
+                Label lblTxt = new Label
+                {
+                    Text = $"Total {nome}:",
+                    Font = new Font("Segoe UI", 12F),
+                    AutoSize = true,
+                    Name = $"lblTxtValorTotal{nome}",
+                    Location = new Point(10, groupBoxHeight - 45)
+                };
+                groupBox.Controls.Add(lblTxt);
+
+                LinkLabel lblValor = new LinkLabel
+                {
+                    Text = "0,00",
+                    Font = new Font("Segoe UI", 14F, FontStyle.Underline),
+                    MinimumSize = new Size(70, 30),
+                    Name = $"lblValorTotal{nome}",
+                    Location = new Point(lblTxt.Right + 5, groupBoxHeight - 47)
+                };
+                groupBox.Controls.Add(lblValor);
+
+                // (opcional) adicionar ação ao clicar no valor
+                lblValor.LinkClicked += (s, e) =>
+                {
+                    string caminho = Util.DiretorioArquivoExcel;
+                    Process.Start("explorer.exe", caminho);
+                };
+
+                panelCaronas.Controls.Add(groupBox);
+            }
+        }
+
+
+        private RadioButton CriarRadioButton(string texto, int top, string nome)
+        {
+            return new RadioButton
+            {
+                Text = texto,
+                Font = new Font("Segoe UI", 14F),
+                AutoSize = true,
+                Location = new Point(10, top),
+                Name = $"radiobtn{texto.Replace(" ", "")}{nome}"
+            };
+        }
+
+
+        private void InicializarBlocosCaronas()
+        {
+            blocosCaronas = new Dictionary<string, BlocoCarona>();
+
+            foreach (var nome in nomesCaronas)
+            {
+                // Criação dos RadioButtons
+                var radioIda = new RadioButton { Text = "Ida", AutoSize = true };
+                var radioVolta = new RadioButton { Text = "Volta", AutoSize = true };
+                var radioIdaVolta = new RadioButton { Text = "Ida e Volta", AutoSize = true };
+                var radioNenhum = new RadioButton { Text = "Sem Carona", AutoSize = true, Checked = true };
+
+                // Nome
+                var labelNome = new Label
+                {
+                    Text = nome,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                    Dock = DockStyle.Top,
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+
+                // GroupBox para agrupar os RadioButtons
+                var groupBox = new GroupBox
+                {
+                    Name = "groupBox" + nome,
+                    Width = 200,
+                    Height = 120,
+                    Visible = true
+                };
+
+                // Posicionamento interno
+                radioIda.Top = 30;
+                radioVolta.Top = 50;
+                radioIdaVolta.Top = 70;
+                radioNenhum.Top = 90;
+
+                radioIda.Left = radioVolta.Left = radioIdaVolta.Left = radioNenhum.Left = 10;
+
+                groupBox.Controls.Add(labelNome);
+                groupBox.Controls.Add(radioIda);
+                groupBox.Controls.Add(radioVolta);
+                groupBox.Controls.Add(radioIdaVolta);
+                groupBox.Controls.Add(radioNenhum);
+
+                // Adiciona ao painel
+                panelCaronas.Controls.Add(groupBox);
+
+                // Cria e salva o bloco
+                var blocoCarona = new BlocoCarona(radioIda, radioVolta, radioIdaVolta, labelNome);
+                blocosCaronas.Add(nome, blocoCarona);
+            }
+        }
+
+
+        private void InicializarPanelCaronas()
+        {
+            panelCaronas = new Panel
+            {
+                Location = new Point(0, 100),
+                Width = this.ClientSize.Width,
+                Height = 300,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                AutoScroll = true
+            };
+
+            this.Controls.Add(panelCaronas);
         }
     }
 }
