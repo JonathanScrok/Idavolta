@@ -102,7 +102,11 @@ namespace Idavolta
                     if (txtboxValorPassagem.Text.Contains("."))
                         txtboxValorPassagem.Text = txtboxValorPassagem.Text.Replace(".", ",");
 
-                    Util.AlterarValorPassagemExcel(Convert.ToDouble(txtboxValorPassagem.Text));
+                    double valorPassagemAnterior = 0;
+                    bool ValorAlterado = Util.AlterarValorPassagemExcel(Convert.ToDouble(txtboxValorPassagem.Text), out valorPassagemAnterior);
+
+                    if (!ValorAlterado)
+                        txtboxValorPassagem.Text = valorPassagemAnterior.ToString("F2"); ;
 
                     txtboxValorPassagem.Enabled = false;
                     txtboxValorPassagem.ReadOnly = true;
@@ -145,18 +149,21 @@ namespace Idavolta
                         caronasSelecionadas[nome] = TipoCarona.Volta;
                     else if (bloco.radioIdaVolta.Checked)
                         caronasSelecionadas[nome] = TipoCarona.IdaVolta;
-                    else
+                    else if (bloco.radioNenhum.Checked)
                         caronasSelecionadas[nome] = TipoCarona.Nenhum;
+                    else
+                        bloco.radioNenhum.Checked = true;
                 }
             }
 
             // Chama o método para salvar os dados no Excel
-            Util.AlterarExcelDadosDinamico(caronasSelecionadas, valorPassagem, nomesCaronas, txtboxDatadeHoje.Text);
+            bool DadosAlterados = Util.AlterarExcelDadosDinamico(caronasSelecionadas, valorPassagem, nomesCaronas, txtboxDatadeHoje.Text);
 
             var (valoresPorPessoa, valorPassagem2) = Util.LerOuCriarExcelDinamico(nomesCaronas);
             AtualizarTotais(valoresPorPessoa);
 
-            MessageBox.Show("Dados salvos com sucesso!");
+            if (DadosAlterados)
+                MessageBox.Show("Dados salvos com sucesso!");
         }
 
         private void btnAnterior_Click(object sender, EventArgs e)
@@ -289,12 +296,17 @@ namespace Idavolta
             txtboxDatadeHoje.Text = DateTime.Now.ToString("dd/MM/yyyy");
             var (valoresPorPessoa, valorPassagem) = Util.LerOuCriarExcelDinamico(nomesCaronas);
             AtualizarTotais(valoresPorPessoa);
-            //var valores = Util.LerOuCriarExcelDinamico();
-            //txtboxValorPassagem.Text = valores.valorPassagem.ToString("F2");
-            //lblValorTotalGui.Text = valores.valoresGuilherme.ToString("F2");
-            //lblValorTotalKamile.Text = valores.valoresKamile.ToString("F2");
-            //lblValorTotalRoger.Text = valores.valoresRoger.ToString("F2");
-            //lblValorTotalFelipe.Text = valores.valoresFelipe.ToString("F2");
+
+            foreach (var nome in nomesCaronas)
+            {
+                if (blocosCaronas.TryGetValue(nome, out var bloco))
+                {
+                    bloco.radioIda.Checked = false;
+                    bloco.radioVolta.Checked = false;
+                    bloco.radioIdaVolta.Checked = false;
+                    bloco.radioNenhum.Checked = false;
+                }
+            }
         }
 
         private void AdicionarNovaCarona(string nome)
@@ -377,7 +389,7 @@ namespace Idavolta
                 groupBox.Controls.Add(radioIdaVolta);
                 groupBox.Controls.Add(radioNenhum);
 
-                blocosCaronas[nome] = new BlocoCarona(radioIda, radioVolta, radioIdaVolta, lblNome);
+                blocosCaronas[nome] = new BlocoCarona(radioIda, radioVolta, radioIdaVolta, radioNenhum, lblNome);
 
                 Label lblTxt = new Label
                 {
@@ -471,7 +483,7 @@ namespace Idavolta
                 panelCaronas.Controls.Add(groupBox);
 
                 // Cria e salva o bloco
-                var blocoCarona = new BlocoCarona(radioIda, radioVolta, radioIdaVolta, labelNome);
+                var blocoCarona = new BlocoCarona(radioIda, radioVolta, radioIdaVolta, radioNenhum, labelNome);
                 blocosCaronas.Add(nome, blocoCarona);
             }
         }

@@ -76,7 +76,6 @@ namespace Idavolta
                             row++;
                         }
 
-                        // Busca a última coluna preenchida na linha 1
                         int ultimaColuna = worksheet.Dimension.End.Column;
                         var valorPassagemCell = worksheet.Cells[1, ultimaColuna].Value;
 
@@ -84,7 +83,6 @@ namespace Idavolta
                         {
                             valorPassagem = v;
                         }
-
 
                         return (valores, valorPassagem);
                     }
@@ -97,6 +95,7 @@ namespace Idavolta
 
                         var worksheet = package.Workbook.Worksheets.Add("Planilha1");
 
+                        // Cabeçalhos
                         worksheet.Cells[1, 1].Value = "Data";
                         for (int i = 0; i < nomes.Count; i++)
                         {
@@ -106,6 +105,31 @@ namespace Idavolta
                         worksheet.Cells[1, nomes.Count + 3].Value = "Valor da Passagem:";
                         worksheet.Cells[1, nomes.Count + 4].Value = ValorPassagemPadrao;
 
+                        // Estilo da primeira linha (cabeçalho)
+                        using (var range = worksheet.Cells[1, 1, 1, nomes.Count + 4])
+                        {
+                            range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(0, 176, 80)); // Verde
+                            range.Style.Font.Bold = true;
+                            range.Style.Font.Color.SetColor(Color.Black);
+
+                            // Bordas grossas em todas as laterais
+                            range.Style.Border.Top.Style = ExcelBorderStyle.Thick;
+                            range.Style.Border.Left.Style = ExcelBorderStyle.Thick;
+                            range.Style.Border.Right.Style = ExcelBorderStyle.Thick;
+                            range.Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+
+                            range.Style.Border.Top.Color.SetColor(Color.Black);
+                            range.Style.Border.Left.Color.SetColor(Color.Black);
+                            range.Style.Border.Right.Color.SetColor(Color.Black);
+                            range.Style.Border.Bottom.Color.SetColor(Color.Black);
+                        }
+
+
+                        // Autoajuste das colunas
+                        worksheet.Cells.AutoFitColumns();
+
+                        // Salvar arquivo
                         var fi = new FileInfo(caminhoCompleto);
                         package.SaveAs(fi);
 
@@ -122,7 +146,7 @@ namespace Idavolta
         #endregion
 
         #region ALTERA O ARQUIVO EXCEL
-        public static void AlterarExcelDadosDinamico(Dictionary<string, TipoCarona> caronasSelecionadas, double valorPassagem, List<string> nomesCaronas, string DataCarona)
+        public static bool AlterarExcelDadosDinamico(Dictionary<string, TipoCarona> caronasSelecionadas, double valorPassagem, List<string> nomesCaronas, string DataCarona)
         {
             try
             {
@@ -171,6 +195,14 @@ namespace Idavolta
 
                     package.Save();
                 }
+
+                return true;
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show("Feche a janela do arquivo Excel!", "Arquivo em uso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                GravarLog("Erro: Arquivo em uso. Não foi possível salvar.");
+                return false;
             }
             catch (Exception ex)
             {
@@ -181,8 +213,9 @@ namespace Idavolta
         #endregion
 
         #region ALTERAR O VALOR DA PASSAGEM
-        public static void AlterarValorPassagemExcel(double valorPassagem)
+        public static bool AlterarValorPassagemExcel(double novoValorPassagem, out double valorPassagemAnterior)
         {
+            valorPassagemAnterior = 0;
             try
             {
                 GravarLog("Alterando Valor da Passagem Arquivo Excel");
@@ -197,15 +230,35 @@ namespace Idavolta
                     {
                         ExcelWorksheet worksheet = package.Workbook.Worksheets["Planilha1"];
 
-                        worksheet.Cells[1, 8].Value = valorPassagem.ToString("F2");
+                        // Busca a última coluna preenchida na linha 1
+                        int ultimaColuna = worksheet.Dimension.End.Column;
+                        var valorPassagemCell = worksheet.Cells[1, ultimaColuna].Value;
+
+                        if (valorPassagemCell != null && double.TryParse(valorPassagemCell.ToString(), out double v))
+                        {
+                            valorPassagemAnterior = v;
+                        }
+
+                        worksheet.Cells[1, ultimaColuna].Value = novoValorPassagem.ToString("F2");
 
                         package.Save();
                         GravarLog("Finalizado! Dados adicionados ao arquivo Excel existente!");
                     }
+
+                    return true;
                 }
+
+                return false;
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show("Feche a janela do arquivo Excel!", "Arquivo em uso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                GravarLog("Erro: Arquivo em uso. Não foi possível salvar.");
+                return false;
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Erro inesperado: " + ex.Message);
                 GravarLog("Erro no AlterarValorPassagemExcel(): " + ex.Message);
                 throw;
             }

@@ -11,14 +11,16 @@ namespace Idavolta
         public RadioButton radioIda { get; set; }
         public RadioButton radioVolta { get; set; }
         public RadioButton radioIdaVolta { get; set; }
+        public RadioButton radioNenhum { get; set; }
         public Panel PanelContainer { get; set; }
         public Label labelNome { get; set; }
 
-        public BlocoCarona(RadioButton ida, RadioButton volta, RadioButton idaVolta, Label nome)
+        public BlocoCarona(RadioButton ida, RadioButton volta, RadioButton idaVolta, RadioButton nenhum, Label nome)
         {
             radioIda = ida;
             radioVolta = volta;
             radioIdaVolta = idaVolta;
+            radioNenhum = nenhum;
             labelNome = nome;
         }
     }
