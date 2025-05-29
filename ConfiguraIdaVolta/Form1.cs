@@ -47,20 +47,6 @@ namespace ConfiguraIdaVolta
 
                 txtBoxDirArqExcel.Text = app.DiretorioArquivoExcel.Replace(@"\\", @"\");
                 txtBoxDirArqLogs.Text = app.DiretorioLOG.Replace(@"\\", @"\");
-
-                // Preencher os ComboBox (S = true = "SIM")
-                PreencherComboBox(cmbBoxSomenteGui, app.SomemteGui);
-                PreencherComboBox(cmbBoxSomenteKamile, app.SomenteKamile);
-                PreencherComboBox(cmbBoxSomenteRoger, app.SomenteRoger);
-                PreencherComboBox(cmbBoxSomenteFelipe, app.SomenteFelipe);
-                PreencherComboBox(cmbBoxSomenteRogerFelipe, app.SomenteRogerFelipe);
-
-                cmbBoxSomenteGui.DropDownStyle = ComboBoxStyle.DropDownList;
-                cmbBoxSomenteKamile.DropDownStyle = ComboBoxStyle.DropDownList;
-                cmbBoxSomenteRoger.DropDownStyle = ComboBoxStyle.DropDownList;
-                cmbBoxSomenteFelipe.DropDownStyle = ComboBoxStyle.DropDownList;
-                cmbBoxSomenteRogerFelipe.DropDownStyle = ComboBoxStyle.DropDownList;
-
             }
             else
             {
@@ -74,31 +60,6 @@ namespace ConfiguraIdaVolta
             combo.Items.Add("SIM");
             combo.Items.Add("NÃO");
             combo.SelectedItem = valor == "S" ? "SIM" : "NÃO";
-        }
-
-        private void AtualizarCombosExclusivos(ComboBox comboAlterado)
-        {
-            // Se o valor selecionado for "SIM"
-            if (comboAlterado.SelectedItem?.ToString() == "SIM")
-            {
-                // Lista com todos os ComboBoxes
-                ComboBox[] todosCombos = {
-            cmbBoxSomenteGui,
-            cmbBoxSomenteKamile,
-            cmbBoxSomenteRoger,
-            cmbBoxSomenteFelipe,
-            cmbBoxSomenteRogerFelipe
-        };
-
-                // Atualiza os outros para "NÃO"
-                foreach (var cmb in todosCombos)
-                {
-                    if (cmb != comboAlterado)
-                    {
-                        cmb.SelectedItem = "NÃO";
-                    }
-                }
-            }
         }
 
         private void btnSalvarConfig_Click(object sender, EventArgs e)
@@ -117,12 +78,7 @@ namespace ConfiguraIdaVolta
                     ValorPassagemPadrao = txtBoxValorPadraoPassagem.Text,
                     NomeArquivoExcel = txtBoxNomeArqExcel.Text + ".xlsx",
                     DiretorioArquivoExcel = txtBoxDirArqExcel.Text,
-                    DiretorioLOG = txtBoxDirArqLogs.Text,
-                    SomemteGui = ObterValorCombo(cmbBoxSomenteGui),
-                    SomenteKamile = ObterValorCombo(cmbBoxSomenteKamile),
-                    SomenteRoger = ObterValorCombo(cmbBoxSomenteRoger),
-                    SomenteFelipe = ObterValorCombo(cmbBoxSomenteFelipe),
-                    SomenteRogerFelipe = ObterValorCombo(cmbBoxSomenteRogerFelipe)
+                    DiretorioLOG = txtBoxDirArqLogs.Text
                 };
 
                 configuracoes.AppSettings = app;
@@ -141,31 +97,6 @@ namespace ConfiguraIdaVolta
         private string ObterValorCombo(ComboBox combo)
         {
             return combo.SelectedItem?.ToString() == "SIM" ? "S" : "N";
-        }
-
-        private void cmbBoxSomenteGui_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AtualizarCombosExclusivos(cmbBoxSomenteGui);
-        }
-
-        private void cmbBoxSomenteKamile_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AtualizarCombosExclusivos(cmbBoxSomenteKamile);
-        }
-
-        private void cmbBoxSomenteRoger_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AtualizarCombosExclusivos(cmbBoxSomenteRoger);
-        }
-
-        private void cmbBoxSomenteFelipe_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AtualizarCombosExclusivos(cmbBoxSomenteFelipe);
-        }
-
-        private void cmbBoxSomenteRogerFelipe_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AtualizarCombosExclusivos(cmbBoxSomenteRogerFelipe);
         }
 
         private void btnSelecionarPastaExcel_Click(object sender, EventArgs e)

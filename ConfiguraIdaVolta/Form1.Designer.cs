@@ -32,11 +32,6 @@ namespace ConfiguraIdaVolta
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             lblTema = new Label();
-            lblSomenteGui = new Label();
-            lblSomenteKamile = new Label();
-            lblSomenteRoger = new Label();
-            lblSomenteFelipe = new Label();
-            lblSomenteRogerFelipe = new Label();
             lblNomeArqExcel = new Label();
             lblDirArqExcel = new Label();
             lblDirArqLogs = new Label();
@@ -46,11 +41,6 @@ namespace ConfiguraIdaVolta
             txtBoxNomeArqExcel = new TextBox();
             txtBoxDirArqExcel = new TextBox();
             txtBoxDirArqLogs = new TextBox();
-            cmbBoxSomenteGui = new ComboBox();
-            cmbBoxSomenteKamile = new ComboBox();
-            cmbBoxSomenteRoger = new ComboBox();
-            cmbBoxSomenteFelipe = new ComboBox();
-            cmbBoxSomenteRogerFelipe = new ComboBox();
             btnSalvarConfig = new Button();
             btnSelecionarPastaExcel = new Button();
             btnSelecionarPastaLogs = new Button();
@@ -66,51 +56,6 @@ namespace ConfiguraIdaVolta
             lblTema.Size = new Size(39, 15);
             lblTema.TabIndex = 0;
             lblTema.Text = "Tema:";
-            // 
-            // lblSomenteGui
-            // 
-            lblSomenteGui.AutoSize = true;
-            lblSomenteGui.Location = new Point(61, 108);
-            lblSomenteGui.Name = "lblSomenteGui";
-            lblSomenteGui.Size = new Size(78, 15);
-            lblSomenteGui.TabIndex = 2;
-            lblSomenteGui.Text = "Somente Gui:";
-            // 
-            // lblSomenteKamile
-            // 
-            lblSomenteKamile.AutoSize = true;
-            lblSomenteKamile.Location = new Point(61, 143);
-            lblSomenteKamile.Name = "lblSomenteKamile";
-            lblSomenteKamile.Size = new Size(96, 15);
-            lblSomenteKamile.TabIndex = 3;
-            lblSomenteKamile.Text = "Somente Kamile:";
-            // 
-            // lblSomenteRoger
-            // 
-            lblSomenteRoger.AutoSize = true;
-            lblSomenteRoger.Location = new Point(61, 174);
-            lblSomenteRoger.Name = "lblSomenteRoger";
-            lblSomenteRoger.Size = new Size(91, 15);
-            lblSomenteRoger.TabIndex = 4;
-            lblSomenteRoger.Text = "Somente Roger:";
-            // 
-            // lblSomenteFelipe
-            // 
-            lblSomenteFelipe.AutoSize = true;
-            lblSomenteFelipe.Location = new Point(61, 207);
-            lblSomenteFelipe.Name = "lblSomenteFelipe";
-            lblSomenteFelipe.Size = new Size(91, 15);
-            lblSomenteFelipe.TabIndex = 5;
-            lblSomenteFelipe.Text = "Somente Felipe:";
-            // 
-            // lblSomenteRogerFelipe
-            // 
-            lblSomenteRogerFelipe.AutoSize = true;
-            lblSomenteRogerFelipe.Location = new Point(61, 237);
-            lblSomenteRogerFelipe.Name = "lblSomenteRogerFelipe";
-            lblSomenteRogerFelipe.Size = new Size(134, 15);
-            lblSomenteRogerFelipe.TabIndex = 6;
-            lblSomenteRogerFelipe.Text = "Somente Roger e Felipe:";
             // 
             // lblNomeArqExcel
             // 
@@ -184,51 +129,6 @@ namespace ConfiguraIdaVolta
             txtBoxDirArqLogs.Size = new Size(324, 23);
             txtBoxDirArqLogs.TabIndex = 16;
             // 
-            // cmbBoxSomenteGui
-            // 
-            cmbBoxSomenteGui.FormattingEnabled = true;
-            cmbBoxSomenteGui.Location = new Point(227, 105);
-            cmbBoxSomenteGui.Name = "cmbBoxSomenteGui";
-            cmbBoxSomenteGui.Size = new Size(121, 23);
-            cmbBoxSomenteGui.TabIndex = 17;
-            cmbBoxSomenteGui.SelectedIndexChanged += cmbBoxSomenteGui_SelectedIndexChanged;
-            // 
-            // cmbBoxSomenteKamile
-            // 
-            cmbBoxSomenteKamile.FormattingEnabled = true;
-            cmbBoxSomenteKamile.Location = new Point(227, 140);
-            cmbBoxSomenteKamile.Name = "cmbBoxSomenteKamile";
-            cmbBoxSomenteKamile.Size = new Size(121, 23);
-            cmbBoxSomenteKamile.TabIndex = 18;
-            cmbBoxSomenteKamile.SelectedIndexChanged += cmbBoxSomenteKamile_SelectedIndexChanged;
-            // 
-            // cmbBoxSomenteRoger
-            // 
-            cmbBoxSomenteRoger.FormattingEnabled = true;
-            cmbBoxSomenteRoger.Location = new Point(227, 174);
-            cmbBoxSomenteRoger.Name = "cmbBoxSomenteRoger";
-            cmbBoxSomenteRoger.Size = new Size(121, 23);
-            cmbBoxSomenteRoger.TabIndex = 19;
-            cmbBoxSomenteRoger.SelectedIndexChanged += cmbBoxSomenteRoger_SelectedIndexChanged;
-            // 
-            // cmbBoxSomenteFelipe
-            // 
-            cmbBoxSomenteFelipe.FormattingEnabled = true;
-            cmbBoxSomenteFelipe.Location = new Point(227, 204);
-            cmbBoxSomenteFelipe.Name = "cmbBoxSomenteFelipe";
-            cmbBoxSomenteFelipe.Size = new Size(121, 23);
-            cmbBoxSomenteFelipe.TabIndex = 20;
-            cmbBoxSomenteFelipe.SelectedIndexChanged += cmbBoxSomenteFelipe_SelectedIndexChanged;
-            // 
-            // cmbBoxSomenteRogerFelipe
-            // 
-            cmbBoxSomenteRogerFelipe.FormattingEnabled = true;
-            cmbBoxSomenteRogerFelipe.Location = new Point(227, 237);
-            cmbBoxSomenteRogerFelipe.Name = "cmbBoxSomenteRogerFelipe";
-            cmbBoxSomenteRogerFelipe.Size = new Size(121, 23);
-            cmbBoxSomenteRogerFelipe.TabIndex = 21;
-            cmbBoxSomenteRogerFelipe.SelectedIndexChanged += cmbBoxSomenteRogerFelipe_SelectedIndexChanged;
-            // 
             // btnSalvarConfig
             // 
             btnSalvarConfig.BackColor = SystemColors.MenuHighlight;
@@ -293,11 +193,6 @@ namespace ConfiguraIdaVolta
             Controls.Add(btnSelecionarPastaLogs);
             Controls.Add(btnSelecionarPastaExcel);
             Controls.Add(btnSalvarConfig);
-            Controls.Add(cmbBoxSomenteRogerFelipe);
-            Controls.Add(cmbBoxSomenteFelipe);
-            Controls.Add(cmbBoxSomenteRoger);
-            Controls.Add(cmbBoxSomenteKamile);
-            Controls.Add(cmbBoxSomenteGui);
             Controls.Add(txtBoxDirArqLogs);
             Controls.Add(txtBoxDirArqExcel);
             Controls.Add(txtBoxNomeArqExcel);
@@ -307,11 +202,6 @@ namespace ConfiguraIdaVolta
             Controls.Add(lblDirArqLogs);
             Controls.Add(lblDirArqExcel);
             Controls.Add(lblNomeArqExcel);
-            Controls.Add(lblSomenteRogerFelipe);
-            Controls.Add(lblSomenteFelipe);
-            Controls.Add(lblSomenteRoger);
-            Controls.Add(lblSomenteKamile);
-            Controls.Add(lblSomenteGui);
             Controls.Add(lblTema);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
@@ -324,11 +214,6 @@ namespace ConfiguraIdaVolta
         #endregion
 
         private Label lblTema;
-        private Label lblSomenteGui;
-        private Label lblSomenteKamile;
-        private Label lblSomenteRoger;
-        private Label lblSomenteFelipe;
-        private Label lblSomenteRogerFelipe;
         private Label lblNomeArqExcel;
         private Label lblDirArqExcel;
         private Label lblDirArqLogs;
@@ -338,11 +223,6 @@ namespace ConfiguraIdaVolta
         private TextBox txtBoxNomeArqExcel;
         private TextBox txtBoxDirArqExcel;
         private TextBox txtBoxDirArqLogs;
-        private ComboBox cmbBoxSomenteGui;
-        private ComboBox cmbBoxSomenteKamile;
-        private ComboBox cmbBoxSomenteRoger;
-        private ComboBox cmbBoxSomenteFelipe;
-        private ComboBox cmbBoxSomenteRogerFelipe;
         private Button btnSalvarConfig;
         private Button btnSelecionarPastaExcel;
         private Button btnSelecionarPastaLogs;

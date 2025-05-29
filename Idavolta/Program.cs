@@ -26,11 +26,11 @@ namespace Idavolta
                 string DiretorioLOG = configuration.GetSection("AppSettings")["DiretorioLOG"];
                 string ValorPassagemPadrao = configuration.GetSection("AppSettings")["ValorPassagemPadrao"];
                 string NomeArquivoExcel = configuration.GetSection("AppSettings")["NomeArquivoExcel"];
-                bool SomenteRogerFelipe = configuration.GetSection("AppSettings")["SomenteRogerFelipe"].ToUpper() == "S" ? true : false;
-                bool SomenteFelipe = configuration.GetSection("AppSettings")["SomenteFelipe"].ToUpper() == "S" ? true : false;
-                bool SomemteGui = configuration.GetSection("AppSettings")["SomemteGui"].ToUpper() == "S" ? true : false;
-                bool SomenteKamile = configuration.GetSection("AppSettings")["SomenteKamile"].ToUpper() == "S" ? true : false;
-                bool SomenteRoger = configuration.GetSection("AppSettings")["SomenteRoger"].ToUpper() == "S" ? true : false;
+                //bool SomenteRogerFelipe = configuration.GetSection("AppSettings")["SomenteRogerFelipe"].ToUpper() == "S" ? true : false;
+                //bool SomenteFelipe = configuration.GetSection("AppSettings")["SomenteFelipe"].ToUpper() == "S" ? true : false;
+                //bool SomemteGui = configuration.GetSection("AppSettings")["SomemteGui"].ToUpper() == "S" ? true : false;
+                //bool SomenteKamile = configuration.GetSection("AppSettings")["SomenteKamile"].ToUpper() == "S" ? true : false;
+                //bool SomenteRoger = configuration.GetSection("AppSettings")["SomenteRoger"].ToUpper() == "S" ? true : false;
                 #endregion
 
                 #region Injeção de Dependencia
@@ -38,12 +38,7 @@ namespace Idavolta
                 new Util(DiretorioLOG,
                          DiretorioArquivoExcel,
                          ValorPassagemPadrao,
-                         NomeArquivoExcel,
-                         SomemteGui,
-                         SomenteKamile,
-                         SomenteRoger,
-                         SomenteFelipe,
-                         SomenteRogerFelipe);
+                         NomeArquivoExcel);
 
                 #endregion
 
