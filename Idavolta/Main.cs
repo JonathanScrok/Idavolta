@@ -309,29 +309,6 @@ namespace Idavolta
             }
         }
 
-        private void AdicionarNovaCarona(string nome)
-        {
-            var caronas = ConfigHelper.ObterListaCaronas();
-
-            if (!caronas.Contains(nome))
-            {
-                caronas.Add(nome);
-                ConfigHelper.SalvarListaCaronas(caronas);
-                MessageBox.Show($"{nome} adicionado!");
-                //this.Controls.Clear();
-                //InitializeComponent();
-
-                nomesCaronas = ConfigHelper.ObterListaCaronas();
-                CriarBlocosCaronasDinamicamente(nomesCaronas);
-                CentralizarControles();
-
-            }
-            else
-            {
-                MessageBox.Show("Carona já existe.");
-            }
-        }
-
         private void CriarBlocosCaronasDinamicamente(List<string> nomesCaronas)
         {
             // 1. Salvar os valores atuais dos totais

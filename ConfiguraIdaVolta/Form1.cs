@@ -24,7 +24,6 @@ namespace ConfiguraIdaVolta
 
             // Substituições com Regex
             string caminhoAtualizado = Regex.Replace(caminhoOriginal, "ConfiguraIdaVolta", "Idavolta");
-            caminhoAtualizado = Regex.Replace(caminhoAtualizado, "net9\\.0-windows", "net8.0-windows");
             caminhoJson = caminhoAtualizado;
 
             if (File.Exists(caminhoJson))
@@ -34,6 +33,12 @@ namespace ConfiguraIdaVolta
 
                 AppSettings app = new AppSettings();
                 app = configuracoes.AppSettings;
+
+                var caronas = ConfigHelper.ObterListaCaronas();
+                foreach (var nome in caronas)
+                {
+                    CriarControleCarona(nome);
+                }
 
                 // Preencher os TextBox
                 txtBoxTema.Text = app.Tema;
@@ -189,6 +194,97 @@ namespace ConfiguraIdaVolta
                     txtBoxDirArqLogs.Text = dialog.SelectedPath;
                 }
             }
+        }
+        private void btnAdicionarCarona_Click(object sender, EventArgs e)
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Digite o nome da nova carona:", "Nova Carona", "");
+
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                input = input.Trim();
+
+                // Adiciona na lista e salva
+                AdicionarNovaCarona(input);
+
+                //// Cria controle visual
+                //CriarControleCarona(input);
+            }
+        }
+
+        private void AdicionarNovaCarona(string nome)
+        {
+            var caronas = ConfigHelper.ObterListaCaronas();
+
+            if (!caronas.Contains(nome))
+            {
+                caronas.Add(nome);
+                ConfigHelper.SalvarListaCaronas(caronas);
+                MessageBox.Show($"{nome} adicionado!");
+
+                CriarControleCarona(nome);
+            }
+            else
+            {
+                MessageBox.Show("Carona já existe.");
+            }
+        }
+
+        private void RemoverCarona(string nome)
+        {
+            var caronas = ConfigHelper.ObterListaCaronas();
+
+            if (caronas.Contains(nome))
+            {
+                caronas.Remove(nome);
+                ConfigHelper.SalvarListaCaronas(caronas);
+                MessageBox.Show($"{nome} removido.");
+            }
+        }
+
+        private void CriarControleCarona(string nome)
+        {
+            // Painel individual para nome + botão X
+            Panel panel = new Panel
+            {
+                Width = 200,
+                Height = 30,
+                Margin = new Padding(5)
+            };
+
+            // Botão X
+            Button btnExcluir = new Button
+            {
+                Text = "X",
+                Width = 30,
+                Height = 25,
+                BackColor = Color.Maroon,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Location = new Point(0, 2)
+            };
+
+            btnExcluir.Click += (s, e) =>
+            {
+                flowLayoutPanelCaronas.Controls.Remove(panel);
+                RemoverCarona(nome);
+            };
+
+            // Label com nome
+            Label lblNome = new Label
+            {
+                Text = nome,
+                AutoSize = false,
+                Width = 150,
+                Height = 25,
+                Location = new Point(35, 5),
+                BackColor = Color.Black,
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+
+            panel.Controls.Add(btnExcluir);
+            panel.Controls.Add(lblNome);
+            flowLayoutPanelCaronas.Controls.Add(panel);
         }
     }
 }

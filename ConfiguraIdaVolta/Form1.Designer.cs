@@ -54,6 +54,8 @@ namespace ConfiguraIdaVolta
             btnSalvarConfig = new Button();
             btnSelecionarPastaExcel = new Button();
             btnSelecionarPastaLogs = new Button();
+            button1 = new Button();
+            flowLayoutPanelCaronas = new FlowLayoutPanel();
             SuspendLayout();
             // 
             // lblTema
@@ -260,12 +262,34 @@ namespace ConfiguraIdaVolta
             btnSelecionarPastaLogs.UseVisualStyleBackColor = true;
             btnSelecionarPastaLogs.Click += btnSelecionarPastaLogs_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(534, 21);
+            button1.Name = "button1";
+            button1.Size = new Size(118, 43);
+            button1.TabIndex = 25;
+            button1.Text = "Adicionar Carona";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += btnAdicionarCarona_Click;
+            // 
+            // flowLayoutPanelCaronas
+            // 
+            flowLayoutPanelCaronas.AutoScroll = true;
+            flowLayoutPanelCaronas.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelCaronas.Location = new Point(452, 79);
+            flowLayoutPanelCaronas.Name = "flowLayoutPanelCaronas";
+            flowLayoutPanelCaronas.Size = new Size(200, 100);
+            flowLayoutPanelCaronas.TabIndex = 26;
+            flowLayoutPanelCaronas.WrapContents = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(800, 450);
+            Controls.Add(flowLayoutPanelCaronas);
+            Controls.Add(button1);
             Controls.Add(btnSelecionarPastaLogs);
             Controls.Add(btnSelecionarPastaExcel);
             Controls.Add(btnSalvarConfig);
@@ -322,5 +346,7 @@ namespace ConfiguraIdaVolta
         private Button btnSalvarConfig;
         private Button btnSelecionarPastaExcel;
         private Button btnSelecionarPastaLogs;
+        private Button button1;
+        private FlowLayoutPanel flowLayoutPanelCaronas;
     }
 }
