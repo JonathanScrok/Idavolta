@@ -133,9 +133,9 @@ namespace ConfiguraIdaVolta
             if (!string.IsNullOrWhiteSpace(input))
             {
                 input = input.Trim();
-
+                string nomeFormatado = input.Replace(" ", "_");
                 // Adiciona na lista e salva
-                AdicionarNovaCarona(input);
+                AdicionarNovaCarona(nomeFormatado);
 
                 //// Cria controle visual
                 //CriarControleCarona(input);

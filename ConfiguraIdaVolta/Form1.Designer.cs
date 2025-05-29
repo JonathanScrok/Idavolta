@@ -51,7 +51,7 @@ namespace ConfiguraIdaVolta
             // lblTema
             // 
             lblTema.AutoSize = true;
-            lblTema.Location = new Point(649, 23);
+            lblTema.Location = new Point(643, 21);
             lblTema.Name = "lblTema";
             lblTema.Size = new Size(39, 15);
             lblTema.TabIndex = 0;
@@ -60,7 +60,7 @@ namespace ConfiguraIdaVolta
             // lblNomeArqExcel
             // 
             lblNomeArqExcel.AutoSize = true;
-            lblNomeArqExcel.Location = new Point(12, 87);
+            lblNomeArqExcel.Location = new Point(12, 80);
             lblNomeArqExcel.Name = "lblNomeArqExcel";
             lblNomeArqExcel.Size = new Size(132, 15);
             lblNomeArqExcel.TabIndex = 7;
@@ -87,7 +87,7 @@ namespace ConfiguraIdaVolta
             // lblValorPadrao
             // 
             lblValorPadrao.AutoSize = true;
-            lblValorPadrao.Location = new Point(12, 123);
+            lblValorPadrao.Location = new Point(12, 109);
             lblValorPadrao.Name = "lblValorPadrao";
             lblValorPadrao.Size = new Size(148, 15);
             lblValorPadrao.TabIndex = 10;
@@ -96,21 +96,21 @@ namespace ConfiguraIdaVolta
             // txtBoxTema
             // 
             txtBoxTema.Enabled = false;
-            txtBoxTema.Location = new Point(694, 20);
+            txtBoxTema.Location = new Point(688, 18);
             txtBoxTema.Name = "txtBoxTema";
             txtBoxTema.Size = new Size(100, 23);
             txtBoxTema.TabIndex = 11;
             // 
             // txtBoxValorPadraoPassagem
             // 
-            txtBoxValorPadraoPassagem.Location = new Point(178, 123);
+            txtBoxValorPadraoPassagem.Location = new Point(178, 109);
             txtBoxValorPadraoPassagem.Name = "txtBoxValorPadraoPassagem";
             txtBoxValorPadraoPassagem.Size = new Size(65, 23);
             txtBoxValorPadraoPassagem.TabIndex = 12;
             // 
             // txtBoxNomeArqExcel
             // 
-            txtBoxNomeArqExcel.Location = new Point(178, 87);
+            txtBoxNomeArqExcel.Location = new Point(178, 80);
             txtBoxNomeArqExcel.Name = "txtBoxNomeArqExcel";
             txtBoxNomeArqExcel.Size = new Size(199, 23);
             txtBoxNomeArqExcel.TabIndex = 13;
@@ -164,7 +164,7 @@ namespace ConfiguraIdaVolta
             // 
             // button1
             // 
-            button1.Location = new Point(259, 201);
+            button1.Location = new Point(670, 74);
             button1.Name = "button1";
             button1.Size = new Size(118, 43);
             button1.TabIndex = 25;
@@ -176,10 +176,10 @@ namespace ConfiguraIdaVolta
             // 
             flowLayoutPanelCaronas.AutoScroll = true;
             flowLayoutPanelCaronas.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanelCaronas.Location = new Point(383, 87);
-            flowLayoutPanelCaronas.MaximumSize = new Size(220, 229);
+            flowLayoutPanelCaronas.Location = new Point(573, 123);
+            flowLayoutPanelCaronas.MaximumSize = new Size(405, 290);
             flowLayoutPanelCaronas.Name = "flowLayoutPanelCaronas";
-            flowLayoutPanelCaronas.Size = new Size(220, 229);
+            flowLayoutPanelCaronas.Size = new Size(215, 258);
             flowLayoutPanelCaronas.TabIndex = 26;
             // 
             // Form1
