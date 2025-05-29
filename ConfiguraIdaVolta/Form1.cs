@@ -206,6 +206,7 @@ namespace ConfiguraIdaVolta
                 // Adiciona na lista e salva
                 AdicionarNovaCarona(input);
 
+                MessageBox.Show($"{input} adicionado!");
                 //// Cria controle visual
                 //CriarControleCarona(input);
             }
@@ -219,8 +220,6 @@ namespace ConfiguraIdaVolta
             {
                 caronas.Add(nome);
                 ConfigHelper.SalvarListaCaronas(caronas);
-                MessageBox.Show($"{nome} adicionado!");
-
                 CriarControleCarona(nome);
             }
             else
