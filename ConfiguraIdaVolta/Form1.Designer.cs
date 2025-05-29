@@ -274,11 +274,12 @@ namespace ConfiguraIdaVolta
             // 
             // flowLayoutPanelCaronas
             // 
-            flowLayoutPanelCaronas.AutoSize = true;
+            flowLayoutPanelCaronas.AutoScroll = true;
             flowLayoutPanelCaronas.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanelCaronas.Location = new Point(452, 79);
+            flowLayoutPanelCaronas.Location = new Point(432, 70);
+            flowLayoutPanelCaronas.MaximumSize = new Size(220, 229);
             flowLayoutPanelCaronas.Name = "flowLayoutPanelCaronas";
-            flowLayoutPanelCaronas.Size = new Size(200, 100);
+            flowLayoutPanelCaronas.Size = new Size(220, 229);
             flowLayoutPanelCaronas.TabIndex = 26;
             // 
             // Form1
