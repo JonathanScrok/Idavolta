@@ -13,6 +13,7 @@ namespace ConfiguraIdaVolta
         public string NomeArquivoExcel { get; set; }
         public string DiretorioArquivoExcel { get; set; }
         public string DiretorioLOG { get; set; }
+        public string ListaCaronas { get; set; }
     }
 
     public class Config

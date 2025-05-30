@@ -8,7 +8,7 @@ namespace ConfiguraIdaVolta
     public partial class Form1 : Form
     {
         private string caminhoJson = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "appsettings.json");
-
+        List<string>? nomesCaronas;
         private Config configuracoes;
 
         public Form1()
@@ -34,8 +34,8 @@ namespace ConfiguraIdaVolta
                 AppSettings app = new AppSettings();
                 app = configuracoes.AppSettings;
 
-                var caronas = ConfigHelper.ObterListaCaronas();
-                foreach (var nome in caronas)
+                nomesCaronas = ConfigHelper.ObterListaCaronas();
+                foreach (var nome in nomesCaronas)
                 {
                     CriarControleCarona(nome);
                 }
@@ -78,7 +78,8 @@ namespace ConfiguraIdaVolta
                     ValorPassagemPadrao = txtBoxValorPadraoPassagem.Text,
                     NomeArquivoExcel = txtBoxNomeArqExcel.Text + ".xlsx",
                     DiretorioArquivoExcel = txtBoxDirArqExcel.Text,
-                    DiretorioLOG = txtBoxDirArqLogs.Text
+                    DiretorioLOG = txtBoxDirArqLogs.Text,
+                    ListaCaronas = nomesCaronas.Aggregate((current, next) => current + "," + next)
                 };
 
                 configuracoes.AppSettings = app;
@@ -144,12 +145,12 @@ namespace ConfiguraIdaVolta
 
         private void AdicionarNovaCarona(string nome)
         {
-            var caronas = ConfigHelper.ObterListaCaronas();
+            nomesCaronas = ConfigHelper.ObterListaCaronas();
 
-            if (!caronas.Contains(nome))
+            if (!nomesCaronas.Contains(nome))
             {
-                caronas.Add(nome);
-                ConfigHelper.SalvarListaCaronas(caronas);
+                nomesCaronas.Add(nome);
+                ConfigHelper.SalvarListaCaronas(nomesCaronas);
                 CriarControleCarona(nome);
                 MessageBox.Show($"{nome} adicionado!");
             }
@@ -161,12 +162,12 @@ namespace ConfiguraIdaVolta
 
         private void RemoverCarona(string nome)
         {
-            var caronas = ConfigHelper.ObterListaCaronas();
+            nomesCaronas = ConfigHelper.ObterListaCaronas();
 
-            if (caronas.Contains(nome))
+            if (nomesCaronas.Contains(nome))
             {
-                caronas.Remove(nome);
-                ConfigHelper.SalvarListaCaronas(caronas);
+                nomesCaronas.Remove(nome);
+                ConfigHelper.SalvarListaCaronas(nomesCaronas);
                 MessageBox.Show($"{nome} removido.");
             }
         }
