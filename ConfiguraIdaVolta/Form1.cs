@@ -145,8 +145,6 @@ namespace ConfiguraIdaVolta
 
         private void AdicionarNovaCarona(string nome)
         {
-            nomesCaronas = ConfigHelper.ObterListaCaronas();
-
             if (!nomesCaronas.Contains(nome))
             {
                 nomesCaronas.Add(nome);
@@ -162,8 +160,6 @@ namespace ConfiguraIdaVolta
 
         private void RemoverCarona(string nome)
         {
-            nomesCaronas = ConfigHelper.ObterListaCaronas();
-
             if (nomesCaronas.Contains(nome))
             {
                 nomesCaronas.Remove(nome);
